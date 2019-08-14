@@ -2,20 +2,34 @@ import * as actionTypes from './actionTypes'
 import axios from '../../axios';
 
 
-
-const successPost = (todoData) => {
+//Starting to send data 
+const postTodoDataStart = () => {
         return {
-                type: actionTypes.POST_TODO_DATA,
+                type: actionTypes.POST_TODO_DATA_START
+        }
+}
+//Successfuly sending data
+const postTodoDataSuccess = (todoData) => {
+        return {
+                type: actionTypes.POST_TODO_DATA_SUCCESS,
                 todoData: todoData
+        }     
+}
+
+const postTodoDataFail = () => {
+        return {
+                type: actionTypes.POST_TODO_DATA_FAIL
         }
 }
 
-export const postTodoData = (todoData) => {
-       return dispatch => {
+//Async action for sending data.
+export const postTodoDataInit = (todoData) => {
+        return dispatch => {
+                dispatch(postTodoDataStart())
                 axios.post('/todoList.json', todoData)
                         .then(res => {
-                                dispatch(successPost(todoData))
+                                dispatch(postTodoDataSuccess(todoData))
                         })
-                        .catch(err => console.log('error ' + err))
+                        .catch(err => dispatch(postTodoDataFail))
         };
 };

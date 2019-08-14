@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import HomeReducer from './store/reducers/HomeReducer';
+import homeReducer from './store/reducers/HomeReducer';
+import authReducer from './store/reducers/AuthReducer';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
-    Home: HomeReducer
+    homeReducer: homeReducer,
+    authReducer: authReducer
 });
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  : null || compose

@@ -1,3 +1,9 @@
 export {
-    postTodoData
-} from './HomeActions'
+    postTodoDataInit
+} from './homeActions'
+
+
+export {
+    logout,
+    authInit
+} from './authActions'

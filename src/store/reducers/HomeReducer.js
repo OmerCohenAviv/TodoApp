@@ -1,24 +1,32 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../sharedFunctions/updateObject'
+import { updateObject } from '../../sharedFunctions/sharedFunctions'
 
 const initalState = {
-    allTodos: []
+    allTodos: [],
+    loading: false
 };
 
 const homeReducer = (state = initalState, action) => {
-    switch(action.type) {
-        case (actionTypes.POST_TODO_DATA ): {
-            console.log(action)
-            const updateTodoList = {
-                allTodos: state.allTodos.concat(action.todoData)
+    switch (action.type) {
+        //Start Case
+        case (actionTypes.POST_TODO_DATA_START): {
+          return  updateObject(state, { loading: true })
+        }
+
+          //Success Case
+        case (actionTypes.POST_TODO_DATA_SUCCESS): {
+            const updateState = {
+                allTodos: state.allTodos.concat(action.todoData),
+                loading: false
             }
-            for (let i in state.allTodos) {
-                console.log( state.allTodos[i])
-            }
-            return updateObject(state, updateTodoList)
+            return updateObject(state, updateState)
+        }
+        case (actionTypes.POST_TODO_DATA_FAIL): {
+            console.log('logged out')
+            return updateObject(state, {loading: false})
         }
         default:
-           return state;
+            return state;
     };
 
 };

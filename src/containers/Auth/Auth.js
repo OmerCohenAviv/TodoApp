@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux'
-import {updateObject} from '../../sharedFunctions/updateObject';
+import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
 import Input from '../../components/UI/Input/Input';
+import * as actions from '../../store/actions/index';
+import Button from '../../components/UI/Button/Button';
+
+
 
 
 class Auth extends Component {
     state = {
         authData: {
             userName: {
-                elementType: 'text',
+                elementType: 'input',
                 elementConfig: {
-                    label: 'User Name ',
-                    type: 'text',
+                    label: 'User Name',
+                    type: 'input',
                     placeholder: 'User Name',
                 },
-                value: ''
+                value: '',
+                rules: {
+                    required: true
+                },
+                touched: false,
+                valid: false
             },
             password: {
                 elementType: 'input',
@@ -24,46 +33,78 @@ class Auth extends Component {
                     type: 'password',
                     placeholder: 'Enter Password',
                 },
-                value: ''
+                rules: {
+                    required: true,
+                    minLength: 7,
+                },
+                value: '',
+                touched: false,
+                valid: false,
             }
         }
     };
-    changeHandler = (id,event) => {
-        const updateEl = updateObject(this.state.authData[id].value , {value: event.target.value} )
+    changeHandler = (id, event) => {
+        const valid = checkValid(this.state.authData[id].rules, event.target.value)
+        const updateEl = updateObject(this.state.authData[id], { value: event.target.value, valid: valid, touched: true })
         const updateAuthData = updateObject(this.state.authData, {
             [id]: updateEl
         });
-        this.setState({authData: updateAuthData})
+        this.setState({ authData: updateAuthData })
+    }
+
+    authHandler = (event) => {
+        event.preventDefault();
+        const authPayload = {
+            email: this.state.authData.userName.value,
+            password: this.state.authData.password.value,
+            returnSecureToken: true
+        }
+        this.props.onAuthInit( authPayload );
     }
 
     render() {
-        let authForm = []
+
+        let authFormArr = []
         for (let ele in this.state.authData) {
-            authForm.push(
-                < Input
-                    change= {() => this.changeHandler(ele)}
-                    type={this.state.authData[ele].elementConfig.type}
-                    placeholder={this.state.authData[ele].placeholder}
-                    value={this.state.authData[ele].value}
-                    elementConfig={this.state.authData[ele].elementConfig}
+            authFormArr.push({
+                id: ele,
+                config: this.state.authData[ele]
+            });
+        };
+        let authForm = (
+            authFormArr.map(ele => (
+                <Input
+                    change={(event) => this.changeHandler(ele.id, event)}
+                    elementType={ele.config.elementType}
+                    key={ele.id}
+                    valid={ele.config.valid}
+                    touched={ele.config.touched}
+                    value={ele.config.value}
+                    elementConfig={ele.config.elementConfig}
                 />
-            )
-        }
+            ))
+        );
         return (
-            <div>
+            <form onSubmit={this.authHandler} >
+                { this.props.error ? <p>{this.props.error}</p>: null }
                 {authForm}
-            </div>
+                <Button btnType='Success'>Sign up</Button>
+            </form >
         );
     };
 };
 
 
 const mapStateToProps = state => {
-    return {}
+    return {
+        error: state.authReducer.error
+    }
 }
 
 const mapDispatchToProps = disaptch => {
-    return {}
+    return {
+        onAuthInit: (event) => disaptch(actions.authInit(event))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
