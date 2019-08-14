@@ -13,9 +13,8 @@ const AllTodosReducer = (state = initialState, action) => {
             return updateObject(state, { loading: true })
         }
         case (actionTypes.FETCH_TODOS_SUCCESS): {
-            let updateTodoArr = [...state.allTodos];
-            updateTodoArr.concat(action.orders)
-            return updateObject(state, { allTodos: updateTodoArr, loading: false })
+            console.log(action.allTodos)
+            return updateObject(state, { allTodos: action.allTodos, loading: false})
         }
         case (actionTypes.FETCH_TODOS_FAIL): {
             console.log(action.error)

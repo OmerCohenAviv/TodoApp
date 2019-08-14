@@ -90,7 +90,7 @@ class Home extends Component {
             ...todoDataArr,
             id: this.props.id
         }
-        this.props.onPostData(todoData)
+        this.props.onPostData(todoData, this.props.token)
     };
 
     render() {
@@ -159,7 +159,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onPostData: (data) => dispatch(actions.postTodoDataInit(data))
+        onPostData: (data, token) => dispatch(actions.postTodoDataInit(data, token))
     }
 }
 

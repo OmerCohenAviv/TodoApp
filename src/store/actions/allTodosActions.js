@@ -9,10 +9,10 @@ const fetchTodosStart = () => {
 };
 
 
-const fetchTodosSuccess = (response) => {
+const fetchTodosSuccess = (allTodos) => {
     return {
         type: actionTypes.FETCH_TODOS_SUCCESS,
-        response: response
+        allTodos: allTodos
     };
 };
 
@@ -26,12 +26,22 @@ const fetchTodosFail = (error) => {
 
 
 export const fetchTodosInit = (data) => {
-   return dispatch => {
+    return dispatch => {
         dispatch(fetchTodosStart());
         const queryParams = '?auth=' + data.token + '&orderBy="userId"&equalTo"' + data.id + '"';
-        axios.get('/todoList.json' + queryParams  )
-        .then(response => dispatch( fetchTodosSuccess(response) ) )
-        .catch(error => dispatch( fetchTodosFail(error) ) )
-    }
-}
+        axios.get('/todoList.json' + queryParams)
+            .then(response => {
+                let allTodos = [];
+                for (let el in response.data) {
+                    allTodos.push({
+                        ...response.data[el]
+                    })
+                }
+                dispatch(fetchTodosSuccess(allTodos))
+            })
+            .catch(error => {
+                dispatch(fetchTodosFail(error))
+            })
 
+        };
+    };

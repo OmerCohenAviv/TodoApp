@@ -23,10 +23,10 @@ const postTodoDataFail = () => {
 }
 
 //Async action for sending data.
-export const postTodoDataInit = (todoData) => {
+export const postTodoDataInit = (todoData, token) => {
         return dispatch => {
                 dispatch(postTodoDataStart())
-                axios.post('/todoList.json', todoData)
+                axios.post('/todoList.json?auth=' + token, todoData)
                         .then(res => {
                                 dispatch(postTodoDataSuccess(todoData))
                         })
