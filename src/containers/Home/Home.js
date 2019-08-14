@@ -87,7 +87,8 @@ class Home extends Component {
             todoDataArr[el] = this.state.cardData[el].value
         };
         const todoData = {
-            ...todoDataArr
+            ...todoDataArr,
+            id: this.props.id
         }
         this.props.onPostData(todoData)
     };
@@ -108,9 +109,11 @@ class Home extends Component {
                 id: cardEl,
                 config: this.state.cardData[cardEl]
             });
-        };
+        }
 
         let card = <Spinner />
+        let disable = true
+         disable = this.state.cardData['title'].valid && this.state.cardData['context'].valid && this.props.token !== null
         if (!this.props.loading) (
             card = (
                 <Card>
@@ -128,9 +131,10 @@ class Home extends Component {
                         ))
                     }
                     <Button
+                        disable = {disable}
                         style={styles.hoverLight}
                         clicked={this.postingDataHandler}
-                        btnType='Success'> Submit </Button>
+                        btnType='Success'> {this.props.token ? 'Submit' : 'Login First '} </Button>
                 </Card>
             )
         )
@@ -147,7 +151,9 @@ class Home extends Component {
 };
 const mapStateToProps = state => {
     return {
-        loading: state.homeReducer.loading
+        loading: state.homeReducer.loading,
+        token: state.authReducer.token,
+        id: state.authReducer.id
     }
 }
 

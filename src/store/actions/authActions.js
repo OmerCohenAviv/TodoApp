@@ -27,7 +27,6 @@ const authFail = (error) => {
 export const authInit = (data) => {
     return dispatch => {
         dispatch(authStart())
-        console.log(data)
         axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBlvd9c1t0h231S80WRMDeibvNPWxtZwx0', data)
             .then(res => {
                 dispatch(authSuccess(res))

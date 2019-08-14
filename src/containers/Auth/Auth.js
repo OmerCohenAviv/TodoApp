@@ -65,7 +65,7 @@ class Auth extends Component {
     }
 
     render() {
-
+        let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid
         let authFormArr = []
         for (let ele in this.state.authData) {
             authFormArr.push({
@@ -74,7 +74,7 @@ class Auth extends Component {
             });
         };
         let authForm = '';
-            authForm = (
+        authForm = (
             authFormArr.map(ele => (
                 <Input
                     change={(event) => this.changeHandler(ele.id, event)}
@@ -86,7 +86,7 @@ class Auth extends Component {
                     elementConfig={ele.config.elementConfig}
                 />
             ))
-        );
+        )
         if (this.props.loading) {
             authForm = <Spinner />
         };
@@ -97,7 +97,10 @@ class Auth extends Component {
             <form onSubmit={this.authHandler} >
                 {this.props.error ? <p>{this.props.error}</p> : null}
                 {authForm}
-                <Button btnType='Success'>Sign up</Button>
+                <Button
+                    clicked={this.authHandler}
+                    disable={disabled}
+                    btnType='Success'>Sign up</Button>
             </form >
 
         );

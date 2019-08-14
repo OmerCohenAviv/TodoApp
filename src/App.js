@@ -5,22 +5,25 @@ import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import SignIn from './containers/Auth/SignIn/SignIn';
 
+
 import { Route, Switch } from 'react-router-dom'
 
 import './App.css';
 
 
 import Layout from './hoc/Layout/Layout';
+import AllTodos from './containers/allTodos/allTodos';
 
 
 class App extends Component {
   render() {
     let routes = (
       <Switch>
+        <Route path='/alltodos' component={AllTodos} />
         <Route path='/register' component={Auth} />
         <Route path='/logout' component={Logout} />
         <Route path='/login' component={SignIn} />
-        <Route path='/'  exact component={Home} />
+        <Route path='/' exact component={Home} />
       </Switch>
     )
     return (

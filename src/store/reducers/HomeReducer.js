@@ -2,7 +2,6 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../sharedFunctions/sharedFunctions'
 
 const initalState = {
-    allTodos: [],
     loading: false
 };
 
@@ -16,7 +15,6 @@ const homeReducer = (state = initalState, action) => {
           //Success Case
         case (actionTypes.POST_TODO_DATA_SUCCESS): {
             const updateState = {
-                allTodos: state.allTodos.concat(action.todoData),
                 loading: false
             }
             return updateObject(state, updateState)

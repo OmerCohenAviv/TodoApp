@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import homeReducer from './store/reducers/HomeReducer';
+import allTodosReducer from './store/reducers/AllTodosReducer';
 import authReducer from './store/reducers/AuthReducer';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
@@ -12,7 +13,8 @@ import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
     homeReducer: homeReducer,
-    authReducer: authReducer
+    authReducer: authReducer,
+    allTodosReducer: allTodosReducer
 });
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  : null || compose

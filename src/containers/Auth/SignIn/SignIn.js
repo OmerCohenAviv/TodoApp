@@ -93,11 +93,15 @@ class SignIn extends Component {
         if (this.props.token !== null) {
             authForm = <Redirect to='/' />
         }
+        let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid 
         return (
             <form onSubmit={this.authHandler} >
                 {this.props.error ? <p>{this.props.error}</p> : null}
                 {authForm}
-                <Button btnType='Success' clicked={this.authHandler}>Login</Button>
+                <Button 
+                disable = {disabled}
+                btnType='Success' 
+                clicked={this.authHandler}>Login</Button>
             </form >
 
         );

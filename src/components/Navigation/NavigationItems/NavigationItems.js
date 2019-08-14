@@ -9,7 +9,7 @@ const navigationItems = (props) => {
         navigation = (
             <Fragment >
                 <NavigationItem link='/' >        Home             </NavigationItem>
-                <NavigationItem link='/orders' >  Completed Todo   </NavigationItem>
+                <NavigationItem link='/alltodos' >  Completed Todo   </NavigationItem>
                 <NavigationItem link='logout' >   Logout!          </NavigationItem>
             </Fragment>
         )
