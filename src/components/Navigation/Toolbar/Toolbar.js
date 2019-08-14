@@ -6,7 +6,7 @@ import classes from './Toolbar.module.css'
 
 const toolbar = (props) => (
     <div className={classes.Toolbar}>
-        <NavigationItems />
+        <NavigationItems auth = {props.auth}/>
     </div>
 )
 

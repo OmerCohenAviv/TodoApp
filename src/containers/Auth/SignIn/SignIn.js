@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
-import Input from '../../components/UI/Input/Input';
-import * as actions from '../../store/actions/index';
-import Button from '../../components/UI/Button/Button';
-import Spinner from '../../components/UI/Spinner/Spinner';
+import { updateObject, checkValid } from '../../../sharedFunctions/sharedFunctions';
+import Input from '../../../components/UI/Input/Input';
+import * as actions from '../../../store/actions/index';
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 
 
 
-class Auth extends Component {
+class SignIn extends Component {
     state = {
         authData: {
             userName: {
@@ -61,7 +61,7 @@ class Auth extends Component {
             password: this.state.authData.password.value,
             returnSecureToken: true
         }
-        this.props.onAuthInit(authPayload);
+        this.props.onSignInInit(authPayload);
     }
 
     render() {
@@ -97,7 +97,7 @@ class Auth extends Component {
             <form onSubmit={this.authHandler} >
                 {this.props.error ? <p>{this.props.error}</p> : null}
                 {authForm}
-                <Button btnType='Success'>Sign up</Button>
+                <Button btnType='Success' clicked={this.authHandler}>Login</Button>
             </form >
 
         );
@@ -115,8 +115,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = disaptch => {
     return {
-        onAuthInit: (event) => disaptch(actions.authInit(event))
+        onSignInInit: (event) => disaptch(actions.signInInit(event))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

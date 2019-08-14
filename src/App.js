@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Home from './containers/Home/Home';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import SignIn from './containers/Auth/SignIn/SignIn';
 
 import { Route, Switch } from 'react-router-dom'
 
@@ -18,6 +19,7 @@ class App extends Component {
       <Switch>
         <Route path='/register' component={Auth} />
         <Route path='/logout' component={Logout} />
+        <Route path='/login' component={SignIn} />
         <Route path='/'  exact component={Home} />
       </Switch>
     )

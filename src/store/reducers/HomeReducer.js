@@ -22,7 +22,6 @@ const homeReducer = (state = initalState, action) => {
             return updateObject(state, updateState)
         }
         case (actionTypes.POST_TODO_DATA_FAIL): {
-            console.log('logged out')
             return updateObject(state, {loading: false})
         }
         default:

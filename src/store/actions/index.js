@@ -5,5 +5,6 @@ export {
 
 export {
     logout,
+    signInInit,
     authInit
 } from './authActions'

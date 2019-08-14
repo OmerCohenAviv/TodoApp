@@ -6,8 +6,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initalState = {
     loading: false,
     error: false,
-    token: '',
-    id: ''
+    token: null,
+    id: null
 };
 
 const authReducer = (state = initalState, action) => {
@@ -17,17 +17,31 @@ const authReducer = (state = initalState, action) => {
         }
 
         case (actionTypes.AUTH_SUCCESS): {
-            console.log('success')
-            return updateObject(state, {loading: false, error: false})
+            console.log(action.res)
+            return updateObject(state, {
+            loading: false, 
+            error: false})
         }
         case (actionTypes.AUTH_FAIL): {
-           return  updateObject(state,{error: action.error})
+           return  updateObject(state,{error: action.error, loading: false})
 
         }
 
         case (actionTypes.LOGOUT): {
-            console.log('logged out')
-            return updateObject(state, {token: '', id: ''})
+            return updateObject(state, {token: null, id: null})
+        }
+
+        case(actionTypes.SIGN_IN_START): {
+            return updateObject(state, {loading: true});
+        }
+
+        case(actionTypes.SIGN_IN_SUCCESS): {
+            return updateObject(state, {loading: false, token: action.res.data.idToken, id: action.res.data.localId})
+        }
+
+        case(actionTypes.SIGN_IN_FAIL): {
+            console.log(action.error)
+            return updateObject(state, {loading: false, error: true})
         }
         default: {
           return  state

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+import { connect } from 'react-redux';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import classes from './Layout.module.css'
 
@@ -9,7 +10,7 @@ class Layout extends Component {
         return (
             <Fragment>
                 <main className={classes.Layout}>
-                    <Toolbar />
+                    <Toolbar auth={this.props.token !== null}/>
                     {this.props.children}
                 </main>
             </Fragment>
@@ -18,5 +19,11 @@ class Layout extends Component {
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        token : state.authReducer.token
+    }
+}
 
-export default Layout;
+
+export default connect(mapStateToProps)(Layout);
