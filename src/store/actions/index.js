@@ -1,9 +1,10 @@
 export {
     postTodoDataInit
-} from './homeActions'
+} from './HomeActions'
 
 
 export {
+    signInAuto,
     logout,
     signInInit,
     authInit
@@ -11,5 +12,6 @@ export {
 
 
 export {
+    removeTodoInit,
     fetchTodosInit
 } from './allTodosActions'

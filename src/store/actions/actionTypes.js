@@ -23,4 +23,8 @@ export const LOGOUT = 'LOGOUT';
 //actionsTypes for allTodos 
 export const FETCH_TODOS_START   = 'FETCH_TODOS_START';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
-export const FETCH_TODOS_FAIL    = 'FETCH_TODOS_FAIL'
+export const FETCH_TODOS_FAIL    = 'FETCH_TODOS_FAIL';
+
+export const REMOVE_TODO_START = 'REMOVE_TODO_START';
+export const REMOVE_TODO_SUCCESS = 'REMOVE_TODO_SUCCESS';
+export const REMOVE_TODO_FAIL = 'REMOVE_TODO_FAIL';

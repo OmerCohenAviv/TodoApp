@@ -23,6 +23,14 @@ const authFail = (error) => {
     }
 }
 
+const checkAuthTimeout = (expireTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout())
+        }, expireTime * 1000)
+    }
+};
+
 
 export const authInit = (data) => {
     return dispatch => {
@@ -39,6 +47,7 @@ export const authInit = (data) => {
 };
 
 export const logout = () => {
+    localStorage.removeItem('expireDate')
     localStorage.removeItem('Token')
     localStorage.removeItem('Id')
     return {
@@ -71,14 +80,42 @@ export const signInInit = (signInProp) => {
         dispatch(signInStart())
         axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBlvd9c1t0h231S80WRMDeibvNPWxtZwx0', signInProp)
             .then(res => {
-                localStorage.setItem('Token', res.data.idToken)
-                localStorage.setItem('Id', res.data.localId)
+                const expireDate = new Date(new Date().getTime() + Number(res.data.expiresIn * 1000)) 
+                localStorage.setItem('Token', res.data.idToken);
+                localStorage.setItem('Id', res.data.localId);
+                localStorage.setItem('expireDate', expireDate);
                 dispatch(signInSuccess(res))
+                dispatch(checkAuthTimeout(res.data.expiresIn))
             })
             .catch(err => {
                 dispatch(signInFail(err))
             })
+    };
+};
 
-    }
 
-}
+export const signInAuto = () => {
+   return dispatch => {
+        const token = localStorage.getItem('Token')
+        const id = localStorage.getItem('Id')
+        if (!token) {
+           return dispatch(logout())
+        }
+        else {
+            const expireDate = new Date(localStorage.getItem('expireDate'));
+            if ( expireDate > new Date() ) {
+                const signInData = { 
+                    data: {
+                        idToken: token,
+                        localId: id
+                    }
+                }
+                dispatch(signInSuccess(signInData))
+                dispatch(checkAuthTimeout((expireDate.getTime() - new Date().getTime())/ 1000 ) )
+            }
+            else {
+                return dispatch( logout() )
+            }
+        };
+    };
+};

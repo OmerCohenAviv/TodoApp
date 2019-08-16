@@ -15,9 +15,7 @@ const authReducer = (state = initalState, action) => {
         case (actionTypes.AUTH_START): {
             return updateObject(state, { loading: true })
         }
-
         case (actionTypes.AUTH_SUCCESS): {
-            console.log(action.res)
             return updateObject(state, {
             loading: false, 
             error: false})
@@ -40,7 +38,6 @@ const authReducer = (state = initalState, action) => {
         }
 
         case(actionTypes.SIGN_IN_FAIL): {
-            console.log(action.error)
             return updateObject(state, {loading: false, error: true})
         }
         default: {

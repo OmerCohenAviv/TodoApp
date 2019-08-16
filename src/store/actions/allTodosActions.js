@@ -28,13 +28,14 @@ const fetchTodosFail = (error) => {
 export const fetchTodosInit = (data) => {
     return dispatch => {
         dispatch(fetchTodosStart());
-        const queryParams = '?auth=' + data.token + '&orderBy="userId"&equalTo"' + data.id + '"';
+        const queryParams = '?auth=' + data.token + '&orderBy="id"&equalTo="' + data.id + '"';
         axios.get('/todoList.json' + queryParams)
             .then(response => {
                 let allTodos = [];
                 for (let el in response.data) {
                     allTodos.push({
-                        ...response.data[el]
+                        ...response.data[el],
+                        key: el
                     })
                 }
                 dispatch(fetchTodosSuccess(allTodos))
@@ -43,5 +44,36 @@ export const fetchTodosInit = (data) => {
                 dispatch(fetchTodosFail(error))
             })
 
-        };
     };
+};
+
+
+const removeTodoStart = () => {
+    return {
+        type: actionTypes.REMOVE_TODO_START
+    };
+};
+
+const removeTodoSuccess = (index) => {
+    return {
+        type: actionTypes.REMOVE_TODO_SUCCESS,
+        index: index
+    };
+};
+const removeTodoFail = () => {
+    return {
+        type: actionTypes.REMOVE_TODO_FAIL
+    };
+};
+export const removeTodoInit = (el, index) => {
+    return dispatch => {
+        dispatch(removeTodoStart())
+        axios.delete('/todoList/' + el + '.json')
+            .then(res => {
+                dispatch(removeTodoSuccess(index))
+            })
+            .catch(err => {
+                dispatch(removeTodoFail())
+            })
+    };
+};
