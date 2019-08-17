@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
 import Input from '../../components/UI/Input/Input';
 import * as actions from '../../store/actions/index';
-import Button from '../../components/UI/Button/Button';
+import Button from '../../components/UI/Buttons/defaultButton/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 

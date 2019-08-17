@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Radium from 'radium'
 
 import { connect } from 'react-redux';
-import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';    
 import Card from '../../components/UI/Card/Card';
 import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
 import * as actions from '../../store/actions/index';
-import Spinner from '../../components/UI/Spinner/Spinner'
+import Spinner from '../../components/UI/Spinner/Spinner';
+import SendButton from '../../components/UI/Buttons/sendButton/sendButton';
 
 // import Modal from '../../components/UI/Modal/Modal';
 
@@ -94,15 +94,6 @@ class Home extends Component {
     };
 
     render() {
-        const styles = {
-            hoverLight: {
-                ':hover': {
-                    color: 'black',
-                    backgroundColor: 'yellow',
-                }
-            }
-        };
-        
         let cardDataArr = [];
         for (let cardEl in this.state.cardData) {
             cardDataArr.push({
@@ -113,7 +104,7 @@ class Home extends Component {
 
         let card = <Spinner />
         let disable = true
-         disable = this.state.cardData['title'].valid && this.state.cardData['context'].valid && this.props.token !== null
+        disable = this.state.cardData['title'].valid && this.state.cardData['context'].valid && this.props.token !== null
         if (!this.props.loading) (
             card = (
                 <Card>
@@ -130,11 +121,14 @@ class Home extends Component {
                             />
                         ))
                     }
-                    <Button
-                        disable = {disable}
-                        style={styles.hoverLight}
-                        clicked={this.postingDataHandler}
-                        btnType='Success'> {this.props.token ? 'Submit' : 'Login First '} </Button>
+                    {console.log(disable)}
+                    <SendButton
+                    type={'primary'}
+                    disable={disable}
+                    clicked={this.postingDataHandler}
+                    clicking='clicking'>
+                        {this.props.token ? 'Submit' : 'Login First '} 
+                    </SendButton>
                 </Card>
             )
         )
