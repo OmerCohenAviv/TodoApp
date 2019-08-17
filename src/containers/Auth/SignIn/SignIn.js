@@ -8,6 +8,8 @@ import * as actions from '../../../store/actions/index';
 import Button from '../../../components/UI/Buttons/defaultButton/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 
+import InfoForm from '../../../components/infoForm/infoForm';
+
 
 
 
@@ -102,7 +104,11 @@ class SignIn extends Component {
                 disable = {disabled}
                 btnType='Success' 
                 clicked={this.authHandler}>Login</Button>
+                             <InfoForm 
+                             disabled={true}
+                             type={'primary'}/>
             </form >
+
 
         );
     };

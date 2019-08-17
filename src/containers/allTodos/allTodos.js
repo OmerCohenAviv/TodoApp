@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment} from 'react';
 
 import { Redirect } from 'react-router-dom'
 import * as actions from '../../store/actions/index'
@@ -20,22 +20,23 @@ class AllTodos extends Component {
 
     render() {
         let allTodos = <Spinner />
-        if (!this.props.loading)      
+        if (!this.props.loading)
             allTodos = this.props.allTodos.map((el, index) => (
                 <AllTodo
                     removeClicked={() => this.props.onRemoveTodoInit(el.key, index)}
                     key={el.key}
                     test={el.key}
-                    title={el.title} />
+                    title={el.title}
+                    important={el.importantcy} />
             ))
         if (this.props.token === null) {
             allTodos = <Redirect to='/' />
         }
 
         return (
-            <div>
+            <Fragment>
                 {allTodos}
-            </div>
+            </Fragment>
         );
     };
 }
@@ -44,10 +45,10 @@ class AllTodos extends Component {
 
 const mapStateToProps = state => {
     return {
-        id:       state.authReducer.id,
-        token:    state.authReducer.token,
-        loading:  state.allTodosReducer.loading,
-        fetched:  state.allTodosReducer.fetched,
+        id: state.authReducer.id,
+        token: state.authReducer.token,
+        loading: state.allTodosReducer.loading,
+        fetched: state.allTodosReducer.fetched,
         allTodos: state.allTodosReducer.allTodos
     };
 };

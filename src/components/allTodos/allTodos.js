@@ -1,13 +1,32 @@
 import React from 'react';
 
-const allTodos = (props) => (
-    <div>
-        <p>{props.title}
-            <button >edit</button>
-            somting {props.index}
-            <button onClick={props.removeClicked}>remove</button>
-        </p>
+import SendButton from '../UI/Buttons/sendButton/sendButton'
+
+const allTodos = (props) => {
+    //important -> Coloring title by importantcy
+    let important = 'green'
+    if (props.important === 'high') {
+        important = 'red';
+    }
+    if (props.important === 'medium') {
+        important = 'yellow';
+    }
+    return <div>
+        <strong style={{color: important}}>{props.title} -</strong>
+        <SendButton
+            size='small'
+            clicked={props.removeClicked}
+            type="secondary"
+            disabled={true}>
+            Delete
+                    </SendButton>
+        <SendButton
+            size='small'
+            type="primary"
+            disabled={true}>
+            Edit
+            </SendButton>
     </div>
-)
+}
 
 export default allTodos

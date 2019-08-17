@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Radium from 'radium'
 
 import { connect } from 'react-redux';
-import Input from '../../components/UI/Input/Input';    
+import Input from '../../components/UI/Input/Input';
 import Card from '../../components/UI/Card/Card';
 import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
 import * as actions from '../../store/actions/index';
@@ -103,8 +103,8 @@ class Home extends Component {
         }
 
         let card = <Spinner />
-        let disable = true
-        disable = this.state.cardData['title'].valid && this.state.cardData['context'].valid && this.props.token !== null
+        let disabled = true
+        disabled = this.state.cardData['title'].valid && this.state.cardData['context'].valid && this.props.token !== null
         if (!this.props.loading) (
             card = (
                 <Card>
@@ -121,13 +121,12 @@ class Home extends Component {
                             />
                         ))
                     }
-                    {console.log(disable)}
                     <SendButton
-                    type={'primary'}
-                    disable={disable}
-                    clicked={this.postingDataHandler}
-                    clicking='clicking'>
-                        {this.props.token ? 'Submit' : 'Login First '} 
+                        type={'primary'}
+                        disabled={disabled}
+                        clicked={this.postingDataHandler}
+                        >
+                        {this.props.token ? 'Submit' : 'Login First '}
                     </SendButton>
                 </Card>
             )

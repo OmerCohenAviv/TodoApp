@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
+
   },
   input: {
     display: 'none',
@@ -14,12 +15,16 @@ const useStyles = makeStyles(theme => ({
 const ContainedButtons = (props) => {
   const classes = useStyles();
   return (
-    <div>
-      <Button variant="contained" color={props.type} className={classes.button} onClick={props.clicked} disabled={!props.disable}>
-          {props.children}
-      </Button>
-
-    </div>
+    
+    <Button
+      size = {props.size}
+      variant="contained"
+      color={props.type}
+      className={classes.button}
+      onClick={props.clicked}
+      disabled={!props.disabled}>
+      {props.children}
+    </Button>
   );
 }
 
