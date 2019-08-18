@@ -24,6 +24,7 @@ class Home extends Component {
                     placeholder: 'Title'
                 },
                 rules: {
+                    maxLength: 20,
                     required: true
                 },
                 value: '',
@@ -38,6 +39,7 @@ class Home extends Component {
                     placeholder: 'context'
                 },
                 rules: {
+                    maxLength: 100,
                     required: true
                 },
                 value: '',

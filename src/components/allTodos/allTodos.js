@@ -13,7 +13,9 @@ const allTodos = (props) => {
     }
     return <div>
         <strong style={{color: important}}>{props.title} -</strong>
-        <SendButton
+        <div style={{wordWrap: "break-word"}}>{props.context}</div>
+            <ul style={{textAlign: 'end'}}>
+            <SendButton
             size='small'
             clicked={props.removeClicked}
             type="secondary"
@@ -26,6 +28,8 @@ const allTodos = (props) => {
             disabled={true}>
             Edit
             </SendButton>
+            </ul>
+            <hr/>
     </div>
 }
 

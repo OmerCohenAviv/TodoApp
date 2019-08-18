@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
-import Input from '../../components/UI/Input/Input';
+import TextField from '@material-ui/core/TextField';
 import * as actions from '../../store/actions/index';
-import Button from '../../components/UI/Buttons/defaultButton/Button';
+import InfoForm from '../../components/infoForm/infoForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 
@@ -76,17 +76,18 @@ class Auth extends Component {
         let authForm = '';
         authForm = (
             authFormArr.map(ele => (
-                <Input
-                    change={(event) => this.changeHandler(ele.id, event)}
-                    elementType={ele.config.elementType}
+                <TextField style={{marginRight: '20px',marginLeft: '30px' }}
+                    label={ele.config.elementConfig.label}
+                    onChange={(event) => this.changeHandler(ele.id, event)}
                     key={ele.id}
+                    type={ele.config.elementConfig.type}
                     valid={ele.config.valid}
                     touched={ele.config.touched}
                     value={ele.config.value}
                     elementConfig={ele.config.elementConfig}
                 />
             ))
-        )
+        );
         if (this.props.loading) {
             authForm = <Spinner />
         };
@@ -94,15 +95,12 @@ class Auth extends Component {
             authForm = <Redirect to='/' />
         }
         return (
-            <form onSubmit={this.authHandler} >
-                {this.props.error ? <p>{this.props.error}</p> : null}
-                {authForm}
-                <Button
-                    clicked={this.authHandler}
-                    disable={disabled}
-                    btnType='Success'>Sign up</Button>
-            </form >
-
+            this.props.loading ? <Spinner /> :         
+            <InfoForm
+                textFields={authForm}
+                clicked={this.authHandler}
+                disabled={disabled}
+                type={'primary'} />
         );
     };
 };

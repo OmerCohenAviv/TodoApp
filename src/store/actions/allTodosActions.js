@@ -1,33 +1,27 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-
+//Fetch todos actions ----->>>>>
 const fetchTodosStart = () => {
     return {
         type: actionTypes.FETCH_TODOS_START
     };
 };
-
-
-const fetchTodosSuccess = (allTodos) => {
+const fetchTodosSuccess = ( allTodos ) => {
     return {
         type: actionTypes.FETCH_TODOS_SUCCESS,
         allTodos: allTodos
     };
 };
-
-
-const fetchTodosFail = (error) => {
+const fetchTodosFail = ( error ) => {
     return {
         type: actionTypes.FETCH_TODOS_FAIL,
         error: error
     };
 };
-
-
-export const fetchTodosInit = (data) => {
+export const fetchTodosInit = ( data ) => {
     return dispatch => {
-        dispatch(fetchTodosStart());
+        dispatch (fetchTodosStart() );
         const queryParams = '?auth=' + data.token + '&orderBy="id"&equalTo="' + data.id + '"';
         axios.get('/todoList.json' + queryParams)
             .then(response => {
@@ -38,23 +32,23 @@ export const fetchTodosInit = (data) => {
                         key: el
                     })
                 }
-                dispatch(fetchTodosSuccess(allTodos))
+                dispatch( fetchTodosSuccess( allTodos ) )
             })
             .catch(error => {
-                dispatch(fetchTodosFail(error))
+                dispatch( fetchTodosFail( error ) )
             })
-
     };
 };
+//Fetch todos actions ----- <<<<<
 
-
+//Remove Todos actions --- >>>>>
 const removeTodoStart = () => {
     return {
         type: actionTypes.REMOVE_TODO_START
     };
 };
 
-const removeTodoSuccess = (index) => {
+const removeTodoSuccess = ( index ) => {
     return {
         type: actionTypes.REMOVE_TODO_SUCCESS,
         index: index
@@ -65,15 +59,42 @@ const removeTodoFail = () => {
         type: actionTypes.REMOVE_TODO_FAIL
     };
 };
-export const removeTodoInit = (el, index) => {
+export const removeTodoInit = ( el, index ) => {
     return dispatch => {
-        dispatch(removeTodoStart())
+        dispatch( removeTodoStart() )
         axios.delete('/todoList/' + el + '.json')
             .then(res => {
-                dispatch(removeTodoSuccess(index))
+                dispatch(removeTodoSuccess( index ))
             })
             .catch(err => {
                 dispatch(removeTodoFail())
             })
     };
 };
+//Remove Todos actions <<<<<<---
+
+
+const editTodoStart =  () => {
+    return {
+        type: actionTypes.EDIT_TODO_START
+    };
+};
+
+const editTodoSuccess = () => {
+    return {
+        type: actionTypes.EDIT_TODO_SUCCESS
+    };
+};
+
+const editTodoFail = () => {
+    return {
+        etype: actionTypes.EDIT_TODO_FAIL
+    };
+};
+
+
+export const editTodoInit = () => {
+   return dispatch => {
+        dispatch (editTodoStart() )
+    }
+}

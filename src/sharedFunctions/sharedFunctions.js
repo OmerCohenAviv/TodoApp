@@ -12,11 +12,14 @@ export  const updateObject = (old,updated) => {
 export const checkValid = (rules, value) => {
    let valid = true
    if (rules.required) {
-      valid = value.trim() !== '' && valid
+      valid = (value.trim() !== '') && valid
    };
 
    if (rules.minLength) {
-      valid = rules.minLength <=  value.length && valid
+      valid = (rules.minLength <=  value.length) && valid
    };
+   if (rules.maxLength) {
+      valid = (rules.maxLength >= value.length) && valid
+   }
   return valid 
 };

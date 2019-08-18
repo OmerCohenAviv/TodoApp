@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateObject, checkValid } from '../../../sharedFunctions/sharedFunctions';
-import Input from '../../../components/UI/Input/Input';
 import * as actions from '../../../store/actions/index';
-import Button from '../../../components/UI/Buttons/defaultButton/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-
+import TextField from '@material-ui/core/TextField';
 import InfoForm from '../../../components/infoForm/infoForm';
 
 
@@ -39,7 +37,6 @@ class SignIn extends Component {
                 },
                 rules: {
                     required: true,
-                    minLength: 7,
                 },
                 value: '',
                 touched: false,
@@ -76,12 +73,13 @@ class SignIn extends Component {
             });
         };
         let authForm = '';
-            authForm = (
+        authForm = (
             authFormArr.map(ele => (
-                <Input
-                    change={(event) => this.changeHandler(ele.id, event)}
-                    elementType={ele.config.elementType}
+                <TextField style={{marginRight: '20px',marginLeft: '30px' }}
+                    label={ele.config.elementConfig.label}
+                    onChange={(event) => this.changeHandler(ele.id, event)}
                     key={ele.id}
+                    type={ele.config.elementConfig.type}
                     valid={ele.config.valid}
                     touched={ele.config.touched}
                     value={ele.config.value}
@@ -95,19 +93,14 @@ class SignIn extends Component {
         if (this.props.token !== null) {
             authForm = <Redirect to='/' />
         }
-        let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid 
+        let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid
         return (
-            <form onSubmit={this.authHandler} >
-                {this.props.error ? <p>{this.props.error}</p> : null}
-                {authForm}
-                <Button 
-                disable = {disabled}
-                btnType='Success' 
-                clicked={this.authHandler}>Login</Button>
-                             <InfoForm 
-                             disabled={true}
-                             type={'primary'}/>
-            </form >
+        this.props.loading ? <Spinner /> :         
+            <InfoForm
+                textFields={authForm}
+                clicked={this.authHandler}
+                disabled={disabled}
+                type={'primary'} />
 
 
         );

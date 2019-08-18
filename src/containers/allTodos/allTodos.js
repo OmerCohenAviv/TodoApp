@@ -26,6 +26,7 @@ class AllTodos extends Component {
                     removeClicked={() => this.props.onRemoveTodoInit(el.key, index)}
                     key={el.key}
                     test={el.key}
+                    context={el.context}
                     title={el.title}
                     important={el.importantcy} />
             ))
@@ -35,7 +36,9 @@ class AllTodos extends Component {
 
         return (
             <Fragment>
-                {allTodos}
+                <div style={{width: '50%'}}>
+                {allTodos}    
+                </div>
             </Fragment>
         );
     };
