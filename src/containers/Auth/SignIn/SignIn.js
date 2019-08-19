@@ -80,10 +80,10 @@ class SignIn extends Component {
                     onChange={(event) => this.changeHandler(ele.id, event)}
                     key={ele.id}
                     type={ele.config.elementConfig.type}
-                    valid={ele.config.valid}
-                    touched={ele.config.touched}
+                    valid={ele.config.valid.toString()}
+                    touched={ele.config.touched.toString()}
                     value={ele.config.value}
-                    elementConfig={ele.config.elementConfig}
+                    elementconfig={ele.config.elementConfig}
                 />
             ))
         );

@@ -23,3 +23,17 @@ export const checkValid = (rules, value) => {
    }
   return valid 
 };
+
+
+export const changeValueHandler = (event, elType) => {
+   const valid = checkValid(this.state.cardData[elType].rules, event.target.value)
+   const updateElement = updateObject(this.state.cardData[elType], {
+       value: event.target.value,
+       touched: true,
+       valid: valid
+   });
+   const updateCardData = updateObject(this.state.cardData, {
+       [elType]: updateElement
+   })
+   this.setState({ cardData: updateCardData })
+}

@@ -11,7 +11,7 @@ const allTodos = (props) => {
     if (props.important === 'medium') {
         important = 'yellow';
     }
-    return <div>
+    return <div style={{width: '50%'}}> 
         <strong style={{color: important}}>{props.title} -</strong>
         <div style={{wordWrap: "break-word"}}>{props.context}</div>
             <ul style={{textAlign: 'end'}}>
@@ -23,6 +23,7 @@ const allTodos = (props) => {
             Delete
                     </SendButton>
         <SendButton
+            clicked={props.editClicked}
             size='small'
             type="primary"
             disabled={true}>

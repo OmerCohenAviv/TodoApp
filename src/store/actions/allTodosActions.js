@@ -93,8 +93,15 @@ const editTodoFail = () => {
 };
 
 
-export const editTodoInit = () => {
+export const editTodoInit = (el, index) => {
    return dispatch => {
-        dispatch (editTodoStart() )
+        dispatch ( editTodoStart() )
+        axios.patch('/todoList' + el + '.json')
+        .then( res => {
+            dispatch (editTodoSuccess() ) 
+        })
+        .catch ( err => {
+            dispatch (editTodoFail() )
+        })
     }
 }

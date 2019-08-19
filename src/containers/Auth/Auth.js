@@ -75,19 +75,20 @@ class Auth extends Component {
         };
         let authForm = '';
         authForm = (
-            authFormArr.map(ele => (
-                <TextField style={{marginRight: '20px',marginLeft: '30px' }}
+            authFormArr.map(ele => {
+                console.log(ele)
+                return <TextField style={{marginRight: '20px',marginLeft: '30px' }}
                     label={ele.config.elementConfig.label}
                     onChange={(event) => this.changeHandler(ele.id, event)}
                     key={ele.id}
                     type={ele.config.elementConfig.type}
-                    valid={ele.config.valid}
-                    touched={ele.config.touched}
+                    valid={ele.config.valid.toString()}
+                    touched={ele.config.touched.toString()}
                     value={ele.config.value}
-                    elementConfig={ele.config.elementConfig}
+                    elementconfig={ele.config.elementConfig}
                 />
-            ))
-        );
+            
+            }));
         if (this.props.loading) {
             authForm = <Spinner />
         };
