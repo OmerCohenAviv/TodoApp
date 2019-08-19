@@ -25,15 +25,16 @@ export const checkValid = (rules, value) => {
 };
 
 
-export const changeValueHandler = (event, elType) => {
-   const valid = checkValid(this.state.cardData[elType].rules, event.target.value)
-   const updateElement = updateObject(this.state.cardData[elType], {
+export const changeValueHandler = ( event, elType,that) => {
+   const valid = checkValid(that.state.cardData[elType].rules, event.target.value)
+   const updateElement = updateObject(that.state.cardData[elType], {
        value: event.target.value,
        touched: true,
        valid: valid
    });
-   const updateCardData = updateObject(this.state.cardData, {
+   const updateCardData = updateObject(that.state.cardData, {
        [elType]: updateElement
    })
-   this.setState({ cardData: updateCardData })
+   return updateCardData 
+
 }

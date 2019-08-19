@@ -3,10 +3,12 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom'
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux';
-import { updateObject } from '../../sharedFunctions/sharedFunctions';
+import { updateObject, changeValueHandler } from '../../sharedFunctions/sharedFunctions';
 import AllTodo from '../../components/allTodos/allTodos';
 import TodoForm from '../../components/todoForm/todoForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem/'
 
 class AllTodos extends Component {
     state = {
@@ -22,6 +24,7 @@ class AllTodos extends Component {
                     maxLength: 20,
                     required: true
                 },
+                select: false,
                 value: '',
                 valid: false,
                 touched: false,
@@ -37,12 +40,13 @@ class AllTodos extends Component {
                     maxLength: 100,
                     required: true
                 },
+                select: false,
                 value: '',
                 touched: false,
                 valid: false,
             },
             importantcy: {
-                elementType: 'select',
+                elementType: 'checkbox',
                 elementConfig: {
                     label: 'Important',
                     options: [
@@ -55,6 +59,7 @@ class AllTodos extends Component {
                 rules: {
                     required: null
                 },
+                select: true,
                 touched: false,
                 value: 'high',
                 valid: true,
@@ -72,35 +77,32 @@ class AllTodos extends Component {
         }
         this.props.onFetchOrders(data)
     }
-    // changeValueHandler(event, elType)
 
     openEditHandler = (el) => {
-
-        let titleUpdate =               {...this.state.cardData.title}
-        let contextUpdate =             {...this.state.cardData.context}
-        let importantUpdate =           {...this.state.cardData.importantcy}
-        titleUpdate.value =             this.props.allTodos[el].title
-        contextUpdate.value =           this.props.allTodos[el].context
-        importantUpdate.value =         this.props.allTodos[el].importantcy
-        const updateState = updateObject(this.state.cardData, {title: titleUpdate, context: contextUpdate, importantcy: importantUpdate} )
-        this.setState({
-            cardData: updateState
-        })
-
-    }
+        let titleUpdate =             { ...this.state.cardData.title }
+        let contextUpdate =           { ...this.state.cardData.context }
+        let importantUpdate =         { ...this.state.cardData.importantcy }
+        titleUpdate.value =           this.props.allTodos[el].title
+        contextUpdate.value =         this.props.allTodos[el].context
+        importantUpdate.value =       this.props.allTodos[el].importantcy
+        const updateState = updateObject(this.state.cardData, { title: titleUpdate, context: contextUpdate, importantcy: importantUpdate })
+        this.setState({ cardData: updateState, editShow: true })
+    };
     cancelEditHandler = () => {
         this.setState({ editShow: false });
-    }
+    };
+    changeHandler = (updating) => {
+        this.setState({ cardData: updating })
+    };
 
     render() {
         let allTodos = <Spinner />
         if (!this.props.loading)
             allTodos = this.props.allTodos.map((el, index) => (
                 <AllTodo
-                    editClicked={(el) => this.openEditHandler(index)}
+                    editClicked={() => this.openEditHandler(index)}
                     removeClicked={() => this.props.onRemoveTodoInit(el.key, index)}
                     key={el.key}
-                    test={el.key}
                     context={el.context}
                     title={el.title}
                     important={el.importantcy} />
@@ -109,24 +111,40 @@ class AllTodos extends Component {
             allTodos = <Redirect to='/' />
         };
 
-        //creating an array -> for creating 2 inputs fields dynamic
+        const editInputsArr = []
+        for (let ele in this.state.cardData) {
+            editInputsArr.push({
+                id: ele,
+                config: this.state.cardData[ele]
+            })
+        }
+        const that = {
+            ...this
+        }
+        const editInputs = editInputsArr.map((ele) => {
+            return <TextField
+                key={ele.id}
+                select={ele.config.select}
+                touched={ele.config.touched.toString()}
+                valid={ele.config.valid.toString()}
+                label={ele.config.elementConfig.label}
+                type={ele.config.elementConfig.type}
+                value={ele.config.value}
+                onChange={(event) => this.changeHandler(changeValueHandler(event, ele.id, that))}>
 
-        // const editInputs = editInputsArr.map(ele => {
-        //     return <TextField
-        //         key={ele.id}
-        //         label={ele.config.elementConfig.label}
-        //         type={ele.config.elementConfig.type}
-        //         onChange={(event) => this.changeValueHandler(event, ele.id)}
-        //         value={ele.config.value}
-        //     />
-        // });
+                {ele.id === 'importantcy' ? ele.config.elementConfig.options.map(opt => {
+                    console.log(opt)
+                   return <MenuItem key={opt.value} value={opt.value}>{opt.displayValue}</MenuItem>
+        }) : null}
+            </TextField>
+        });
 
         return (
             <Fragment>
                 <div >
                     {this.state.editShow ?
                         <TodoForm
-                            // textFields={editInputs}
+                            textFields={editInputs}
                             cancelClicked={this.cancelEditHandler}
                             editText='Edit'
                             disabled={true}

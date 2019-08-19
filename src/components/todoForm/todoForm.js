@@ -5,7 +5,7 @@ import SendButton from '../UI/Buttons/sendButton/sendButton';
 
 const todoForm = (props) => {
     return (
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ width: '50%', float: 'right'}}>
             {props.textFields}
             <SendButton
                 type={'primary'}
