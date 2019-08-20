@@ -52,7 +52,7 @@ class Auth extends Component {
             [id]: updateEl
         });
         this.setState({ authData: updateAuthData })
-    }
+    };
 
     authHandler = (event) => {
         event.preventDefault();
@@ -60,9 +60,9 @@ class Auth extends Component {
             email: this.state.authData.userName.value,
             password: this.state.authData.password.value,
             returnSecureToken: true
-        }
+        };
         this.props.onAuthInit(authPayload);
-    }
+    };
 
     render() {
         let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid
@@ -73,6 +73,7 @@ class Auth extends Component {
                 config: this.state.authData[ele]
             });
         };
+
         let authForm = '';
         authForm = (
             authFormArr.map(ele => {
@@ -83,18 +84,17 @@ class Auth extends Component {
                     key={ele.id}
                     type={ele.config.elementConfig.type}
                     valid={ele.config.valid.toString()}
-                    touched={ele.config.touched.toString()}
                     value={ele.config.value}
                     elementconfig={ele.config.elementConfig}
                 />
-            
-            }));
+            }) );
+
         if (this.props.loading) {
             authForm = <Spinner />
         };
         if (this.props.token !== null) {
             authForm = <Redirect to='/' />
-        }
+        };
         return (
             this.props.loading ? <Spinner /> :         
             <InfoForm
@@ -117,9 +117,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = disaptch => {
-    return {
-        onAuthInit: (event) => disaptch(actions.authInit(event))
-    }
-}
+    return {  onAuthInit: (event) => disaptch(actions.authInit(event)) }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

@@ -118,9 +118,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = disaptch => {
-    return {
-        onSignInInit: (event) => disaptch(actions.signInInit(event))
-    }
-}
+    return {  onSignInInit: (event) => disaptch(actions.signInInit(event)) }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

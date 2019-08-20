@@ -4,6 +4,7 @@ import SendButton from '../UI/Buttons/sendButton/sendButton';
 
 
 const todoForm = (props) => {
+    //Form for editing.
     return (
         <div style={{ width: '50%', float: 'right'}}>
             {props.textFields}

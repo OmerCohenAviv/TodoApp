@@ -18,12 +18,9 @@ class Layout extends Component {
         );
     };
 };
-
 const mapStateToProps = state => {
-    return {
-        token : state.authReducer.token
-    }
-}
+    return {  token : state.authReducer.token }   
+};
 
 
-export default connect(mapStateToProps)(Layout);
+export default connect( mapStateToProps )( Layout );

@@ -82,22 +82,19 @@ class AllTodos extends Component {
 
 
     openEditHandler = (index, el) => {
-        let titleUpdate = { ...this.state.cardData.title }
-        let contextUpdate = { ...this.state.cardData.context }
-        let importantUpdate = { ...this.state.cardData.importantcy }
-        titleUpdate.value = this.props.allTodos[index].title
-        titleUpdate.valid = checkValid(titleUpdate.rules, this.props.allTodos[index].title)
-        contextUpdate.value = this.props.allTodos[index].context
-        contextUpdate.valid = checkValid(contextUpdate.rules, this.props.allTodos[index].context)
-        importantUpdate.value = this.props.allTodos[index].importantcy
-        const updateState = updateObject(this.state.cardData, { title: titleUpdate, context: contextUpdate, importantcy: importantUpdate })
+        let settingEditForm = {...this.state.cardData}
+        settingEditForm.title.valid = checkValid(settingEditForm.title.rules, this.props.allTodos[index].title)
+        settingEditForm.title.value = this.props.allTodos[index].title
+        settingEditForm.context.valid = checkValid(settingEditForm.context.rules, this.props.allTodos[index].context)
+        settingEditForm.context.value = this.props.allTodos[index].context
+        settingEditForm.importantcy.value = this.props.allTodos[index].importantcy
+        const updateState = updateObject(this.state.cardData, settingEditForm)
         return this.setState({ cardData: updateState, editShow: true, currentEditIndex: el.key }, () => {
-            const updateValues = { ...this.state.cardData }
             const currentValuesEdit = {
                 id: this.props.id,
-                title: updateValues.title.value,
-                context: updateValues.context.value,
-                importantcy: updateValues.importantcy.value
+                title:       settingEditForm.context.value,
+                context:     settingEditForm.context.value ,
+                importantcy: settingEditForm.importantcy.value
             }
             return this.setState({ currentValuesEdit: currentValuesEdit })
         })
@@ -114,8 +111,7 @@ class AllTodos extends Component {
             if (true) {
                 let updatingCurrent = { ...this.state.currentValuesEdit }
                 let valid = true
-                const accessToValid = { ...this.state.cardData }
-                const accessToValidDeep = { ...accessToValid }
+                const accessToValidDeep = { ...this.state.cardData  }
                 for (let types in accessToValidDeep) {
                     updatingCurrent[types] = accessToValidDeep[types].value
                     valid = valid && accessToValidDeep[types].valid
@@ -126,9 +122,9 @@ class AllTodos extends Component {
 
     }
     render() {
-
         let allTodos = <Spinner />
         if (!this.props.loading)
+        //displaying allTodos...
             allTodos = this.props.allTodos.map((el, index) => {
                 return <AllTodo
                     editClicked={() => this.openEditHandler(index, el)}
@@ -153,6 +149,7 @@ class AllTodos extends Component {
             ...this
         }
         const editInputs = editInputsArr.map((ele) => {
+            //TextFields for edit form
             return <TextField
                 style={{ display: 'flex', }}
                 key={ele.id}
@@ -172,6 +169,7 @@ class AllTodos extends Component {
             <Fragment>
                 <div >
                     {this.state.editShow ?
+                    //Displayin edit form.
                         <TodoForm 
                             textFields={editInputs}
                             editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token, this.props.id)}
@@ -202,11 +200,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // onUpdate
-        onEditTodoInit: (index, objectValues, token, id) => dispatch(actions.editTodoInit(index, objectValues, token, id)),
-        onRemoveTodoInit: (el, index, token) => dispatch(actions.removeTodoInit(el, index, token)),
-        onFetchOrders: (data) => dispatch(actions.fetchTodosInit(data))
-    };
+        onEditTodoInit: (index, objectValues, token, id) => dispatch(actions.editTodoInit(index, objectValues, token, id)), //Editing
+        onRemoveTodoInit: (el, index, token) => dispatch(actions.removeTodoInit(el, index, token)),                         //Removing
+        onFetchOrders: (data) => dispatch(actions.fetchTodosInit(data))                                                     //Fetching
+    }; 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllTodos)
+export default connect( mapStateToProps, mapDispatchToProps )( AllTodos ) 

@@ -1,8 +1,9 @@
+//Home
 export {
     postTodoDataInit
 } from './HomeActions'
 
-
+//Auth
 export {
     signInAuto,
     logout,
@@ -10,7 +11,7 @@ export {
     authInit
 } from './authActions'
 
-
+//AllTodos 
 export {
     editTodoInit,
     removeTodoInit,

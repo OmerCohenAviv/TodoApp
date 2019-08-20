@@ -24,8 +24,8 @@ export const checkValid = (rules, value) => {
   return valid 
 };
 
-
-export const changeValueHandler = ( event, elType,that) => {
+//changeValue of input
+export const changeValueHandler = ( event, elType, that ) => {
    const valid = checkValid(that.state.cardData[elType].rules, event.target.value)
    const updateElement = updateObject(that.state.cardData[elType], {
        value: event.target.value,

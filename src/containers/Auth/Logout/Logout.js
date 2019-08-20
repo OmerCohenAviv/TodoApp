@@ -7,24 +7,17 @@ import * as action from '../../../store/actions/index';
 
 
 class Logout extends Component {
-    componentDidMount() {
-        this.props.onLogout()
-    }
+    componentDidMount() { this.props.onLogout() }
+
     render() {
-        return (
-            <div>
-                <Redirect to ='/' />
-            </div>
-        );
+        return ( <div> <Redirect to='/' /> </div> );
     };
 };
 
 
 const mapDispatchToProps = dispatch => {
-    return {
-        onLogout: () => dispatch(action.logout())
-    }
-}
+    return { onLogout: () => dispatch(action.logout()) } 
+};
 
 
 
