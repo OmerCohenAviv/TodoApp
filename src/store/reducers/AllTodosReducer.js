@@ -38,14 +38,13 @@ const AllTodosReducer = (state = initialState, action) => {
 
 
         case (actionTypes.EDIT_TODO_START) : {
-            return state
+            return updateObject(state, {loading: true})
         }
         case (actionTypes.EDIT_TODO_SUCCESS) : {
-            return state
+            return updateObject(state, {loading: false})
         }
         case (actionTypes.EDIT_TODO_FAIL) : {
-            console.log(action.err)
-            return state
+            return updateObject(state, {loading: false})
         }
         default:
             return state

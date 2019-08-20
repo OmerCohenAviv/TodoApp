@@ -120,7 +120,6 @@ class AllTodos extends Component {
                     updatingCurrent[types] = accessToValidDeep[types].value
                     valid = valid && accessToValidDeep[types].valid
                 }
-                console.log(updatingCurrent)
                 this.setState({ cardValdiation: valid, currentValuesEdit: updatingCurrent })
             };
         });
@@ -133,7 +132,7 @@ class AllTodos extends Component {
             allTodos = this.props.allTodos.map((el, index) => {
                 return <AllTodo
                     editClicked={() => this.openEditHandler(index, el)}
-                    removeClicked={() => this.props.onRemoveTodoInit(el.key, index)}
+                    removeClicked={() => this.props.onRemoveTodoInit(el.key, index, this.props.token)}
                     key={el.key}
                     context={el.context}
                     title={el.title}
@@ -173,9 +172,9 @@ class AllTodos extends Component {
             <Fragment>
                 <div >
                     {this.state.editShow ?
-                        <TodoForm
+                        <TodoForm 
                             textFields={editInputs}
-                            editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token)}
+                            editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token, this.props.id)}
                             cancelClicked={this.cancelEditHandler}
                             editText='Finish'
                             disabled={this.state.cardValdiation}
@@ -204,8 +203,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // onUpdate
-        onEditTodoInit: (index, objectValues, token) => dispatch(actions.editTodoInit(index, objectValues, token)),
-        onRemoveTodoInit: (el, index, ) => dispatch(actions.removeTodoInit(el, index)),
+        onEditTodoInit: (index, objectValues, token, id) => dispatch(actions.editTodoInit(index, objectValues, token, id)),
+        onRemoveTodoInit: (el, index, token) => dispatch(actions.removeTodoInit(el, index, token)),
         onFetchOrders: (data) => dispatch(actions.fetchTodosInit(data))
     };
 };
