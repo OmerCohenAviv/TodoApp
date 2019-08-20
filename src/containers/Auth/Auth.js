@@ -98,6 +98,7 @@ class Auth extends Component {
         return (
             this.props.loading ? <Spinner /> :         
             <InfoForm
+                actionType='Sign Up'
                 textFields={authForm}
                 clicked={this.authHandler}
                 disabled={disabled}

@@ -11,7 +11,7 @@ const infoForm = ( props ) => {
             <SendButton
             type={props.type}
             clicked = {props.clicked}
-            disabled={props.disabled}>Login!</SendButton>
+            disabled={props.disabled}>{props.actionType}</SendButton>
         </form>
     )
 };

@@ -67,7 +67,9 @@ class AllTodos extends Component {
         },
         progressTodo: false,
         cardValdiation: true,
-        editShow: false
+        editShow: false,
+        currentEditIndex: '',
+        currentValuesEdit: ''
     };
 
     componentDidMount() {
@@ -79,18 +81,28 @@ class AllTodos extends Component {
     }
 
 
-    openEditHandler = (el) => {
+    openEditHandler = (index, el) => {
         let titleUpdate = { ...this.state.cardData.title }
         let contextUpdate = { ...this.state.cardData.context }
         let importantUpdate = { ...this.state.cardData.importantcy }
-        titleUpdate.value = this.props.allTodos[el].title
-        titleUpdate.valid = checkValid(titleUpdate.rules, this.props.allTodos[el].title)
-        contextUpdate.value = this.props.allTodos[el].context
-        contextUpdate.valid = checkValid(contextUpdate.rules, this.props.allTodos[el].context)
-        importantUpdate.value = this.props.allTodos[el].importantcy
+        titleUpdate.value = this.props.allTodos[index].title
+        titleUpdate.valid = checkValid(titleUpdate.rules, this.props.allTodos[index].title)
+        contextUpdate.value = this.props.allTodos[index].context
+        contextUpdate.valid = checkValid(contextUpdate.rules, this.props.allTodos[index].context)
+        importantUpdate.value = this.props.allTodos[index].importantcy
         const updateState = updateObject(this.state.cardData, { title: titleUpdate, context: contextUpdate, importantcy: importantUpdate })
-        this.setState({ cardData: updateState, editShow: true })
+        return this.setState({ cardData: updateState, editShow: true, currentEditIndex: el.key }, () => {
+            const updateValues = { ...this.state.cardData }
+            const currentValuesEdit = {
+                id: this.props.id,
+                title: updateValues.title.value,
+                context: updateValues.context.value,
+                importantcy: updateValues.importantcy.value
+            }
+            return this.setState({ currentValuesEdit: currentValuesEdit })
+        })
     };
+
     cancelEditHandler = () => {
         this.setState({ editShow: false });
     };
@@ -100,29 +112,33 @@ class AllTodos extends Component {
         updated = updated()
         this.setState({ cardData: updated }, () => {
             if (true) {
+                let updatingCurrent = { ...this.state.currentValuesEdit }
                 let valid = true
-                let accessToValid = { ...this.state.cardData }
-                let accessToValidDeep = { ...accessToValid }
-                for (let ele in accessToValidDeep) {
-                    valid = valid && accessToValidDeep[ele].valid
-                };
-                this.setState({cardValdiation: valid})
+                const accessToValid = { ...this.state.cardData }
+                const accessToValidDeep = { ...accessToValid }
+                for (let types in accessToValidDeep) {
+                    updatingCurrent[types] = accessToValidDeep[types].value
+                    valid = valid && accessToValidDeep[types].valid
+                }
+                console.log(updatingCurrent)
+                this.setState({ cardValdiation: valid, currentValuesEdit: updatingCurrent })
             };
         });
 
     }
     render() {
+
         let allTodos = <Spinner />
         if (!this.props.loading)
-            allTodos = this.props.allTodos.map((el, index) => (
-                <AllTodo
-                    editClicked={() => this.openEditHandler(index)}
+            allTodos = this.props.allTodos.map((el, index) => {
+                return <AllTodo
+                    editClicked={() => this.openEditHandler(index, el)}
                     removeClicked={() => this.props.onRemoveTodoInit(el.key, index)}
                     key={el.key}
                     context={el.context}
                     title={el.title}
                     important={el.importantcy} />
-            ))
+            })
         if (this.props.token === null) {
             allTodos = <Redirect to='/' />
         };
@@ -159,8 +175,9 @@ class AllTodos extends Component {
                     {this.state.editShow ?
                         <TodoForm
                             textFields={editInputs}
+                            editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token)}
                             cancelClicked={this.cancelEditHandler}
-                            editText='Edit'
+                            editText='Finish'
                             disabled={this.state.cardValdiation}
                             cancelText='Cancel'
                         />
@@ -186,7 +203,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRemoveTodoInit: (el, index) => dispatch(actions.removeTodoInit(el, index)),
+        // onUpdate
+        onEditTodoInit: (index, objectValues, token) => dispatch(actions.editTodoInit(index, objectValues, token)),
+        onRemoveTodoInit: (el, index, ) => dispatch(actions.removeTodoInit(el, index)),
         onFetchOrders: (data) => dispatch(actions.fetchTodosInit(data))
     };
 };

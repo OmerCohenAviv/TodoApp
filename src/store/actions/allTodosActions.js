@@ -87,17 +87,19 @@ const editTodoSuccess = (res) => {
     };
 };
 
-const editTodoFail = () => {
+const editTodoFail = (err) => {
     return {
-        etype: actionTypes.EDIT_TODO_FAIL
+        type: actionTypes.EDIT_TODO_FAIL,
+        err: err
     };
 };
 
 
-export const editTodoInit = (el, index) => {
+export const editTodoInit = ( index, data, token) => {
+    console.log(index)
    return dispatch => {
         dispatch ( editTodoStart() )
-        axios.patch('/todoList' + el + '.json')
+        axios.patch('/todoList/' + index + '.json?auth=' + token, data)
         .then( res => {
             dispatch (editTodoSuccess(res) ) 
         })

@@ -20,8 +20,6 @@ const AllTodosReducer = (state = initialState, action) => {
             return updateObject(state, { loading: false, fetched: false })
         }
 
-
-
         case (actionTypes.REMOVE_TODO_START): {
             return updateObject(state, { loading: true })
         }
@@ -33,10 +31,21 @@ const AllTodosReducer = (state = initialState, action) => {
                 }),
                 loading: false
             })
-
         }
         case (actionTypes.REMOVE_TODO_FAIL): {
             return updateObject(state, { loading: false })
+        }
+
+
+        case (actionTypes.EDIT_TODO_START) : {
+            return state
+        }
+        case (actionTypes.EDIT_TODO_SUCCESS) : {
+            return state
+        }
+        case (actionTypes.EDIT_TODO_FAIL) : {
+            console.log(action.err)
+            return state
         }
         default:
             return state

@@ -8,6 +8,7 @@ const todoForm = (props) => {
         <div style={{ width: '50%', float: 'right'}}>
             {props.textFields}
             <SendButton
+                clicked={props.editSend}
                 type={'primary'}
                 disabled={props.disabled}>
                 {props.editText}

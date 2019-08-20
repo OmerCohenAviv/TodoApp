@@ -12,6 +12,7 @@ export {
 
 
 export {
+    editTodoInit,
     removeTodoInit,
     fetchTodosInit
 } from './allTodosActions'
