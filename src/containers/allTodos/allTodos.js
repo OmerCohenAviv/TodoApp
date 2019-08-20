@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom'
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux';
-import { updateObject, changeValueHandler } from '../../sharedFunctions/sharedFunctions';
+import { updateObject, changeValueHandler, checkValid } from '../../sharedFunctions/sharedFunctions';
 import AllTodo from '../../components/allTodos/allTodos';
 import TodoForm from '../../components/todoForm/todoForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -26,7 +26,7 @@ class AllTodos extends Component {
                 },
                 select: false,
                 value: '',
-                valid: false,
+                valid: true,
                 touched: false,
             },
             context: {
@@ -43,7 +43,7 @@ class AllTodos extends Component {
                 select: false,
                 value: '',
                 touched: false,
-                valid: false,
+                valid: true,
             },
             importantcy: {
                 elementType: 'checkbox',
@@ -57,7 +57,7 @@ class AllTodos extends Component {
 
                 },
                 rules: {
-                    required: null
+                    required: true
                 },
                 select: true,
                 touched: false,
@@ -66,7 +66,7 @@ class AllTodos extends Component {
             },
         },
         progressTodo: false,
-        cardValdiation: false,
+        cardValdiation: true,
         editShow: false
     };
 
@@ -78,23 +78,39 @@ class AllTodos extends Component {
         this.props.onFetchOrders(data)
     }
 
+
     openEditHandler = (el) => {
-        let titleUpdate =             { ...this.state.cardData.title }
-        let contextUpdate =           { ...this.state.cardData.context }
-        let importantUpdate =         { ...this.state.cardData.importantcy }
-        titleUpdate.value =           this.props.allTodos[el].title
-        contextUpdate.value =         this.props.allTodos[el].context
-        importantUpdate.value =       this.props.allTodos[el].importantcy
+        let titleUpdate = { ...this.state.cardData.title }
+        let contextUpdate = { ...this.state.cardData.context }
+        let importantUpdate = { ...this.state.cardData.importantcy }
+        titleUpdate.value = this.props.allTodos[el].title
+        titleUpdate.valid = checkValid(titleUpdate.rules, this.props.allTodos[el].title)
+        contextUpdate.value = this.props.allTodos[el].context
+        contextUpdate.valid = checkValid(contextUpdate.rules, this.props.allTodos[el].context)
+        importantUpdate.value = this.props.allTodos[el].importantcy
         const updateState = updateObject(this.state.cardData, { title: titleUpdate, context: contextUpdate, importantcy: importantUpdate })
         this.setState({ cardData: updateState, editShow: true })
     };
     cancelEditHandler = () => {
         this.setState({ editShow: false });
     };
-    changeHandler = (updating) => {
-        this.setState({ cardData: updating })
-    };
 
+    changeHandler = (event, ele, that) => {
+        let updated = () => changeValueHandler(event, ele.id, that)
+        updated = updated()
+        this.setState({ cardData: updated }, () => {
+            if (true) {
+                let valid = true
+                let accessToValid = { ...this.state.cardData }
+                let accessToValidDeep = { ...accessToValid }
+                for (let ele in accessToValidDeep) {
+                    valid = valid && accessToValidDeep[ele].valid
+                };
+                this.setState({cardValdiation: valid})
+            };
+        });
+
+    }
     render() {
         let allTodos = <Spinner />
         if (!this.props.loading)
@@ -123,22 +139,20 @@ class AllTodos extends Component {
         }
         const editInputs = editInputsArr.map((ele) => {
             return <TextField
+                style={{ display: 'flex', }}
                 key={ele.id}
                 select={ele.config.select}
                 touched={ele.config.touched.toString()}
-                valid={ele.config.valid.toString()}
                 label={ele.config.elementConfig.label}
                 type={ele.config.elementConfig.type}
                 value={ele.config.value}
-                onChange={(event) => this.changeHandler(changeValueHandler(event, ele.id, that))}>
+                onChange={(event) => this.changeHandler(event, ele, that)}>
 
                 {ele.id === 'importantcy' ? ele.config.elementConfig.options.map(opt => {
-                    console.log(opt)
-                   return <MenuItem key={opt.value} value={opt.value}>{opt.displayValue}</MenuItem>
-        }) : null}
+                    return <MenuItem key={opt.value} value={opt.value}>{opt.displayValue}</MenuItem>
+                }) : null}
             </TextField>
         });
-
         return (
             <Fragment>
                 <div >
@@ -147,7 +161,7 @@ class AllTodos extends Component {
                             textFields={editInputs}
                             cancelClicked={this.cancelEditHandler}
                             editText='Edit'
-                            disabled={true}
+                            disabled={this.state.cardValdiation}
                             cancelText='Cancel'
                         />
                         : null}

@@ -80,9 +80,10 @@ const editTodoStart =  () => {
     };
 };
 
-const editTodoSuccess = () => {
+const editTodoSuccess = (res) => {
     return {
-        type: actionTypes.EDIT_TODO_SUCCESS
+        type: actionTypes.EDIT_TODO_SUCCESS,
+        res: res
     };
 };
 
@@ -98,10 +99,10 @@ export const editTodoInit = (el, index) => {
         dispatch ( editTodoStart() )
         axios.patch('/todoList' + el + '.json')
         .then( res => {
-            dispatch (editTodoSuccess() ) 
+            dispatch (editTodoSuccess(res) ) 
         })
         .catch ( err => {
-            dispatch (editTodoFail() )
+            dispatch (editTodoFail( err ) )
         })
     }
 }

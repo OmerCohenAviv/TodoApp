@@ -36,5 +36,4 @@ export const changeValueHandler = ( event, elType,that) => {
        [elType]: updateElement
    })
    return updateCardData 
-
 }
