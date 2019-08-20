@@ -1,7 +1,7 @@
 // actionTypes for Home ->
-export const POST_TODO_DATA_START  = 'POST_TODO_DATA_START';
+export const POST_TODO_DATA_START  =  'POST_TODO_DATA_START';
 export const POST_TODO_DATA_SUCCESS = 'POST_TODO_DATA_SUCCESS';
-export const POST_TODO_DATA_FAIL = 'POST_TO_DO_DATA_FAIL';
+export const POST_TODO_DATA_FAIL =    'POST_TO_DO_DATA_FAIL';
 
 //-----------
 
@@ -25,11 +25,11 @@ export const FETCH_TODOS_START   = 'FETCH_TODOS_START';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
 export const FETCH_TODOS_FAIL    = 'FETCH_TODOS_FAIL';
 
-export const REMOVE_TODO_START = 'REMOVE_TODO_START';
+export const REMOVE_TODO_START =   'REMOVE_TODO_START';
 export const REMOVE_TODO_SUCCESS = 'REMOVE_TODO_SUCCESS';
-export const REMOVE_TODO_FAIL = 'REMOVE_TODO_FAIL';
+export const REMOVE_TODO_FAIL =     'REMOVE_TODO_FAIL';
 
 
-export const EDIT_TODO_START = 'EDIT_TODO_START';
+export const EDIT_TODO_START =   'EDIT_TODO_START';
 export const EDIT_TODO_SUCCESS = 'EDIT_TODO_SUCCESS';
-export const EDIT_TODO_FAIL = 'EDIT_TODO_FAIL'
+export const EDIT_TODO_FAIL =    'EDIT_TODO_FAIL';

@@ -21,28 +21,21 @@ const authReducer = (state = initalState, action) => {
             error: false})
         }
         case (actionTypes.AUTH_FAIL): {
-           return  updateObject(state,{error: action.error, loading: false})
-
-        }
+           return  updateObject(state,{error: action.error, loading: false}) }
 
         case (actionTypes.LOGOUT): {
-            return updateObject(state, {token: null, id: null})
-        }
-
+            return updateObject(state, {token: null, id: null}) }
+        
         case(actionTypes.SIGN_IN_START): {
-            return updateObject(state, {loading: true});
-        }
+            return updateObject(state, {loading: true}) }
 
         case(actionTypes.SIGN_IN_SUCCESS): {
-            return updateObject(state, {loading: false, token: action.res.data.idToken, id: action.res.data.localId})
-        }
+            return updateObject(state, {loading: false, token: action.res.data.idToken, id: action.res.data.localId}) }
 
         case(actionTypes.SIGN_IN_FAIL): {
-            return updateObject(state, {loading: false, error: true})
-        }
-        default: {
-          return  state
-        }
+            return updateObject(state, {loading: false, error: true}) }
+            
+        default: { return  state}
     };
 };
 

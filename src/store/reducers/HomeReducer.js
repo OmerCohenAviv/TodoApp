@@ -7,25 +7,17 @@ const initalState = {
 
 const homeReducer = (state = initalState, action) => {
     switch (action.type) {
-        //Start Case
         case (actionTypes.POST_TODO_DATA_START): {
-          return  updateObject(state, { loading: true })
-        }
-
-          //Success Case
+          return  updateObject(state, { loading: true }) }
+        
         case (actionTypes.POST_TODO_DATA_SUCCESS): {
-            const updateState = {
-                loading: false
-            }
-            return updateObject(state, updateState)
-        }
-        case (actionTypes.POST_TODO_DATA_FAIL): {
-            return updateObject(state, {loading: false})
-        }
-        default:
-            return state;
-    };
+            return updateObject(state, { loading: false}) }
 
+        case (actionTypes.POST_TODO_DATA_FAIL): {
+            return updateObject(state, { loading: false}) }
+        
+        default: { return state}
+    };
 };
 
 
