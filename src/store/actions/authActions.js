@@ -1,20 +1,19 @@
 import axios from '../../axios';
 import * as actionTypes from '../actions/actionTypes';
 
-//Authenticating... +++++++++++++++++++
-//Start - Loading: true
+
 const authStart = () => {
     return { type: actionTypes.AUTH_START } };
 
-//Success - Loading: false, error: false 
+
 const authSuccess = ( response ) => {
     return {  type: actionTypes.AUTH_SUCCESS, res: response } }; 
 
-//Fail - Loading: false, error: true (Display?)
+
 const authFail = ( error ) => {
     return { type: actionTypes.AUTH_FAIL, error: error } };
     
-//Async Authenticating... Sendin Email,Password to firebase to register 
+
     export const authInit = ( data ) => {
         return dispatch => {
             dispatch( authStart() )
@@ -26,18 +25,18 @@ const authFail = ( error ) => {
                 .catch(err => { dispatch(authFail(err.response.data.error.message))  });
         };
     };
-//Authenticating...  ------------------------------
 
 
 
 
-//Setting a timer to Logout after expireTime for token
+
+
 const checkAuthTimeout = (expireTime) => {
     return dispatch => {
         setTimeout(() => { dispatch( logout() ) }, expireTime * 1000)
     };
 };
-//Logging out (Removing localStorage Data )
+
 export const logout = () => {
     localStorage.removeItem('expireDate')
     localStorage.removeItem('Token')
@@ -45,20 +44,18 @@ export const logout = () => {
     return {  type: actionTypes.LOGOUT } };
 
 
-//Sign In Actions ++++++++++++++++++++++
-//Start - Loading: true
+
+
 const signInStart = () => {
     return { type: actionTypes.SIGN_IN_START} };
 
-//Success - Setting up  token,id. Loading: false  
 const signInSuccess = ( data ) => {
     return { type: actionTypes.SIGN_IN_SUCCESS,    res: data } };
 
 const signInFail = ( error ) => {
-//Faliure - Loading: false
+
     return { type: actionTypes.SIGN_IN_FAIL,  error: error } };
 
-//Async for signing in sending email,password 
 export const signInInit = (signInProp) => {
     return dispatch => {
         dispatch(signInStart())
@@ -76,7 +73,7 @@ export const signInInit = (signInProp) => {
                 dispatch(signInFail(err.response.data.error.message)) })
     };
 };
-//Checks if there's  storage.token/expireTime(not outDated) -> Logs in
+
 export const signInAuto = () => {
    return dispatch => {
         const token = localStorage.getItem('Token')
@@ -98,4 +95,3 @@ export const signInAuto = () => {
         };
     };
 };
-//Sign In Actions -------------------------

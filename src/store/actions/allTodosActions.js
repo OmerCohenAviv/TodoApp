@@ -1,20 +1,16 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-// Fetching Actions+++++++++++++++++++++++
-//Start - Loading -> true
+
 const fetchTodosStart = () => {
     return { type: actionTypes.FETCH_TODOS_START } };
 
-//Success -> Fetched Todos -> into an array, Loading -> false
 const fetchTodosSuccess = (allTodos) => {
     return {  type: actionTypes.FETCH_TODOS_SUCCESS, allTodos: allTodos } };
 
-//Failure - Loading -> false, error -> True(Display?)
 const fetchTodosFail = (error) => {
     return { type: actionTypes.FETCH_TODOS_FAIL, error: error } };
-    
-   ///Async fetching (Fetching only Todo's that match current user Id)
+
     export const fetchTodosInit = ( data ) => {
         return dispatch => {
             dispatch( fetchTodosStart() );
@@ -29,7 +25,6 @@ const fetchTodosFail = (error) => {
                     dispatch ( fetchTodosFail( error ) )  })
         };
     };
-//Fetching Actions--------------------------------------------
 
 
 
@@ -38,20 +33,17 @@ const fetchTodosFail = (error) => {
 
 
 
-//Deleting Todos Action's +++++++++++++++++++
-//Start - Loading -> true
+
 const removeTodoStart = () => {
     return { type: actionTypes.REMOVE_TODO_START } };
 
- //Success -> Fetched Todos -> Remove from array By Index, Loading -> false
+
 const removeTodoSuccess = ( index ) => {
     return { type: actionTypes.REMOVE_TODO_SUCCESS, index: index } };
 
-//Failure - Loading -> false, error -> true(Display?)
 const removeTodoFail = () => {
     return { type: actionTypes.REMOVE_TODO_FAIL } };
 
-//Async Deleting Todo's  
 export const removeTodoInit = (el, index, token) => {
     return dispatch => {
         dispatch(removeTodoStart())
@@ -60,18 +52,16 @@ export const removeTodoInit = (el, index, token) => {
             .catch(err => { dispatch( removeTodoFail( err ) )      })
     };
 };
-//Deleting Todos Action's ----------------------
 
 
 
 
 
-//Updating Todos Action's +++++++++++++++++++
-//Start  - Loading -> true
+
+
 const editTodoStart = () => {
     return { type: actionTypes.EDIT_TODO_START } };
     
-//Failure -> Loading -> false, error : true (Display?)
 const editTodoFail = ( err ) => {
     return {  type: actionTypes.EDIT_TODO_FAIL,  err: err } };
 
@@ -88,4 +78,3 @@ export const editTodoInit = (index, data, token, id, editShowF) => {
             .catch(err => { dispatch(editTodoFail( err )) })              
     };
 };
-//Updating Todos Action's ----------------------
