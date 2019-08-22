@@ -6,7 +6,7 @@ import SendButton from '../UI/Buttons/sendButton/sendButton';
 const todoForm = (props) => {
     //Form for editing.
     return (
-        <div style={{ width: '50%', float: 'right'}}>
+        <div style={{marginLeft:'auto',width:'45%',marginRight:'auto'}} >
             {props.textFields}
             <SendButton
                 clicked={props.editSend}
@@ -16,8 +16,8 @@ const todoForm = (props) => {
             </SendButton>
             <SendButton
                 clicked={props.cancelClicked}
-                type={'primary'}
-                disabled={props.disabled}>
+                type={'secondary'}
+                disabled>
                 {props.cancelText}
             </SendButton>
         </div>

@@ -167,19 +167,22 @@ class AllTodos extends Component {
         });
         return (
             <Fragment>
-                <div >
+                <div style={{display:'flex', flexDirection:'row'}}>
+                <div style={{flexDirection:'column',width:'45%',marginLeft:'30px'}}>
+                        {allTodos}
+                    </div>
                     {this.state.editShow ?
                     //Displayin edit form.
                         <TodoForm 
                             textFields={editInputs}
-                            editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token, this.props.id)}
+                            editSend={() => this.props.onEditTodoInit(this.state.currentEditIndex, this.state.currentValuesEdit, this.props.token, this.props.id, this.cancelEditHandler)}
                             cancelClicked={this.cancelEditHandler}
                             editText='Finish'
                             disabled={this.state.cardValdiation}
                             cancelText='Cancel'
                         />
                         : null}
-                    {allTodos}
+                    
                 </div>
             </Fragment>
         );
@@ -200,7 +203,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onEditTodoInit: (index, objectValues, token, id) => dispatch(actions.editTodoInit(index, objectValues, token, id)), //Editing
+        onEditTodoInit: (index, objectValues, token, id,editShowF) => dispatch(actions.editTodoInit(index, objectValues, token, id,editShowF)), //Editing
         onRemoveTodoInit: (el, index, token) => dispatch(actions.removeTodoInit(el, index, token)),                         //Removing
         onFetchOrders: (data) => dispatch(actions.fetchTodosInit(data))                                                     //Fetching
     }; 

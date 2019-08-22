@@ -33,7 +33,7 @@ const authReducer = (state = initalState, action) => {
             return updateObject(state, {loading: false, token: action.res.data.idToken, id: action.res.data.localId}) }
 
         case(actionTypes.SIGN_IN_FAIL): {
-            return updateObject(state, {loading: false, error: true}) }
+            return updateObject(state, {loading: false, error: action.error}) }
             
         default: { return  state}
     };

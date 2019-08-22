@@ -97,6 +97,7 @@ class SignIn extends Component {
         return (
         this.props.loading ? <Spinner /> :         
             <InfoForm
+                error = {this.props.error}
                 actionType='Login!'
                 textFields={authForm}
                 clicked={this.authHandler}

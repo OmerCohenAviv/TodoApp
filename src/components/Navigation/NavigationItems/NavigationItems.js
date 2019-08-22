@@ -8,18 +8,18 @@ const navigationItems = (props) => {
     if (props.auth) {
         navigation = (
             <Fragment >
-                <NavigationItem link='/' >        Home             </NavigationItem>
-                <NavigationItem link='/alltodos' >  Completed Todo   </NavigationItem>
-                <NavigationItem link='logout' >   Logout!          </NavigationItem>
+                <NavigationItem styling={{marginRight:'auto'}}  link='/' >Home</NavigationItem>
+                <NavigationItem styling={{marginRight: 'auto'}} link='/alltodos' >Completed Todo </NavigationItem>
+                <NavigationItem  link='logout' >Logout!</NavigationItem>
             </Fragment>
         )
     }
     else {
         navigation = (
             <Fragment >
-                <NavigationItem link='/' >        Home             </NavigationItem>
-                <NavigationItem link='/register'> Sign up!         </NavigationItem>
-                <NavigationItem link='login'>     Login!           </NavigationItem>
+                <NavigationItem  styling={{marginRight:'auto'}} link='/' > Home  </NavigationItem>
+                <NavigationItem  styling={{marginRight: '20px'}} link='/register'> Sign up! </NavigationItem>
+                <NavigationItem   link='/login'> Login! </NavigationItem>
             </Fragment>
         );
     }

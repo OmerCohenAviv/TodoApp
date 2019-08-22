@@ -5,12 +5,15 @@ import * as actionTypes from '../actions/actionTypes';
 //Start - Loading: true
 const authStart = () => {
     return { type: actionTypes.AUTH_START } };
+
 //Success - Loading: false, error: false 
 const authSuccess = ( response ) => {
     return {  type: actionTypes.AUTH_SUCCESS, res: response } }; 
+
 //Fail - Loading: false, error: true (Display?)
 const authFail = ( error ) => {
     return { type: actionTypes.AUTH_FAIL, error: error } };
+    
 //Async Authenticating... Sendin Email,Password to firebase to register 
     export const authInit = ( data ) => {
         return dispatch => {
@@ -46,15 +49,17 @@ export const logout = () => {
 //Start - Loading: true
 const signInStart = () => {
     return { type: actionTypes.SIGN_IN_START} };
+
 //Success - Setting up  token,id. Loading: false  
 const signInSuccess = ( data ) => {
     return { type: actionTypes.SIGN_IN_SUCCESS,    res: data } };
+
 const signInFail = ( error ) => {
 //Faliure - Loading: false
     return { type: actionTypes.SIGN_IN_FAIL,  error: error } };
+
 //Async for signing in sending email,password 
 export const signInInit = (signInProp) => {
-    console.log(signInProp)
     return dispatch => {
         dispatch(signInStart())
         axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBlvd9c1t0h231S80WRMDeibvNPWxtZwx0', signInProp)
@@ -68,7 +73,7 @@ export const signInInit = (signInProp) => {
                 dispatch(checkAuthTimeout(res.data.expiresIn))
             })
             .catch(err => {
-                dispatch(signInFail(err)) })
+                dispatch(signInFail(err.response.data.error.message)) })
     };
 };
 //Checks if there's  storage.token/expireTime(not outDated) -> Logs in

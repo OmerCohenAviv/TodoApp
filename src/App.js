@@ -21,9 +21,9 @@ class App extends Component {
       <Switch>
         <Route path='/alltodos' component={AllTodos} />
         <Route path='/register' component={Auth} />
-        <Route path='/logout' component={Logout} />
-        <Route path='/login' component={SignIn} />
-        <Route path='/' exact component={Home} />
+        <Route path='/logout'   component={Logout} />
+        <Route path='/login'    component={SignIn} />
+        <Route path='/' exact   component={Home} />
       </Switch>
     )
     return (
@@ -35,9 +35,7 @@ class App extends Component {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    onAutoSignIn: () => dispatch(actions.signInAuto())
-  }
-}
+  return { onAutoSignIn: () => dispatch(actions.signInAuto()) } 
+};
 
 export default connect(null,mapDispatchToProps)(App)

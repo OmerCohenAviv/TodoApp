@@ -77,7 +77,6 @@ class Auth extends Component {
         let authForm = '';
         authForm = (
             authFormArr.map(ele => {
-                console.log(ele)
                 return <TextField style={{marginRight: '20px',marginLeft: '30px' }}
                     label={ele.config.elementConfig.label}
                     onChange={(event) => this.changeHandler(ele.id, event)}
@@ -98,11 +97,13 @@ class Auth extends Component {
         return (
             this.props.loading ? <Spinner /> :         
             <InfoForm
+                error={this.props.error}
                 actionType='Sign Up'
                 textFields={authForm}
                 clicked={this.authHandler}
                 disabled={disabled}
                 type={'primary'} />
+            
         );
     };
 };

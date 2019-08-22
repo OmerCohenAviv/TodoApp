@@ -8,12 +8,15 @@ const postTodoDataStart = () => {
                 type: actionTypes.POST_TODO_DATA_START
         }
 }
+
 //Successfuly sending data 
 const postTodoDataSuccess = (todoData) => {
         return { type: actionTypes.POST_TODO_DATA_SUCCESS, todoData: todoData } }
+
 //Failure - loading -> false 
 const postTodoDataFail = () => {
         return {  type: actionTypes.POST_TODO_DATA_FAIL } };
+
 //Async action for sending data.
 export const postTodoDataInit = ( todoData, token ) => {
         return dispatch => {
