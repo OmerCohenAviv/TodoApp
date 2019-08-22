@@ -8,9 +8,9 @@
     font: inherit;
     padding: 6px 10px;
     display: block;
-    width: 100%;
     box-sizing: border-box;
 }
+
 
 .Textarea {
     color: black;
@@ -23,7 +23,6 @@
     width: 100%;
     box-sizing: border-box;  
     margin: 0px -3.0625px 0px 0px;
-    width: 478px;
     height: 101px;
     resize: none;
 }

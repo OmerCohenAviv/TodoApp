@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SendButton from '../UI/Buttons/sendButton/sendButton';
+import classes from './infoForm.module.css'
 
 
 const infoForm = ( props ) => {
@@ -17,13 +18,13 @@ const infoForm = ( props ) => {
     }
 
     return (    
-        <form style={{textAlign:'center'}} >
+        <form  className={classes.infoForm}>
             {props.textFields}
             <SendButton
             type={props.type}
             clicked = {props.clicked}
             disabled={props.disabled}>{props.actionType}</SendButton>
-            <p style={{color:'red', textTransform:'lowercase'}}>{errors}</p>
+            <p style={{color:'red', textTransform:'lowercase',fontSize:'1.8em'}}>{errors}</p>
         </form>
     )
 };

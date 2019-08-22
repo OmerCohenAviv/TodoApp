@@ -1,0 +1,10 @@
+.infoForm {
+    text-align: center
+}
+
+@media (max-width: 600px) {
+    .infoForm {
+        display: flex;
+        flex-flow: column;
+    }
+}
