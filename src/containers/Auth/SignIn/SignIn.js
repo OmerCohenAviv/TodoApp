@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateObject, checkValid } from '../../../sharedFunctions/sharedFunctions';
+import { authForm } from '../../../utility/Configs/Configs';
+import { updateObject, checkValid, updateElementAuth} from '../../../utility/sharedFunctions/sharedFunctions';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import TextField from '@material-ui/core/TextField';
@@ -12,46 +13,17 @@ import InfoForm from '../../../components/infoForm/infoForm';
 
 
 class SignIn extends Component {
-    state = {
-        authData: {
-            userName: {
-                elementType: 'input',
-                elementConfig: {
-                    label: 'User Name',
-                    type: 'input',
-                    placeholder: 'User Name',
-                },
-                value: '',
-                rules: {
-                    required: true
-                },
-                touched: false,
-                valid: false
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    label: 'Password',
-                    type: 'password',
-                    placeholder: 'Enter Password',
-                },
-                rules: {
-                    required: true,
-                },
-                value: '',
-                touched: false,
-                valid: false,
-            }
-        }
-    };
+    state = {...authForm};
+
+    
     changeHandler = (id, event) => {
+        console.log(this.state)
         const valid = checkValid(this.state.authData[id].rules, event.target.value)
-        const updateEl = updateObject(this.state.authData[id], { value: event.target.value, valid: valid, touched: true })
-        const updateAuthData = updateObject(this.state.authData, {
-            [id]: updateEl
-        });
+        console.log(id)
+        const updatedEl = updateElementAuth(event, id, valid, this)
+        const updateAuthData = updateObject(this.state.authData, { [id]: updatedEl } );
         this.setState({ authData: updateAuthData })
-    }
+    };
 
     authHandler = (event) => {
         event.preventDefault();
@@ -75,7 +47,7 @@ class SignIn extends Component {
         let authForm = '';
         authForm = (
             authFormArr.map(ele => (
-                <TextField style={{marginRight: '20px',marginLeft: '30px' }}
+                <TextField style={{ marginRight: '20px', marginLeft: '30px' }}
                     label={ele.config.elementConfig.label}
                     onChange={(event) => this.changeHandler(ele.id, event)}
                     key={ele.id}
@@ -94,15 +66,16 @@ class SignIn extends Component {
             authForm = <Redirect to='/' />
         }
         let disabled = this.state.authData['userName'].valid && this.state.authData['password'].valid
+
         return (
-        this.props.loading ? <Spinner /> :         
-            <InfoForm
-                error = {this.props.error}
-                actionType='Login!'
-                textFields={authForm}
-                clicked={this.authHandler}
-                disabled={disabled}
-                type={'primary'} />
+            this.props.loading ? <Spinner /> :
+                <InfoForm
+                    error={this.props.error}
+                    actionType='Login!'
+                    textFields={authForm}
+                    clicked={this.authHandler}
+                    disabled={disabled}
+                    type={'primary'} />
 
 
         );
@@ -119,7 +92,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = disaptch => {
-    return {  onSignInInit: (event) => disaptch(actions.signInInit(event)) }
+    return { onSignInInit: (event) => disaptch(actions.signInInit(event)) }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

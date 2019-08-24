@@ -1,15 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../sharedFunctions/sharedFunctions'
+import { updateObject } from '../../utility/sharedFunctions/sharedFunctions'
 
 const initalState = {
     loading: false
 };
-
 const homeReducer = (state = initalState, action) => {
     switch (action.type) {
         case (actionTypes.POST_TODO_DATA_START): {
           return  updateObject(state, { loading: true }) }
-        
+
         case (actionTypes.POST_TODO_DATA_SUCCESS): {
             return updateObject(state, { loading: false}) }
 
@@ -19,6 +18,5 @@ const homeReducer = (state = initalState, action) => {
         default: { return state}
     };
 };
-
 
 export default homeReducer;

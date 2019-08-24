@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom'
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux';
-import { updateObject, changeValueHandler, checkValid } from '../../sharedFunctions/sharedFunctions';
+import { updateObject, changeValueHandler, checkValid } from '../../utility/sharedFunctions/sharedFunctions';
 import AllTodo from '../../components/allTodos/allTodos';
 import TodoForm from '../../components/todoForm/todoForm';
 import Spinner from '../../components/UI/Spinner/Spinner';

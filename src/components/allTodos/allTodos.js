@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SendButton from '../UI/Buttons/sendButton/sendButton'
+import Modal from '../UI/Modal/Modal';
 
 const allTodos = (props) => {
     //important -> Coloring title by importantcy
@@ -15,13 +16,7 @@ const allTodos = (props) => {
         <strong style={{ color: important }}>{props.title} -</strong>
         <div style={{ wordWrap: "break-word" }}>{props.context}</div>
         <ul style={{ textAlign: 'end' }}>
-            <SendButton
-                size='small'
-                clicked={props.removeClicked}
-                type="secondary"
-                disabled={true}>
-                Delete
-            </SendButton>
+            <Modal>Click</Modal>
             <SendButton
                 clicked={props.editClicked}
                 size='small'

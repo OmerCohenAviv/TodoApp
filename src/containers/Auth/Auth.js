@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
+import { authForm } from '../../utility/Configs/Configs';
+import { updateObject, checkValid } from '../../utility/sharedFunctions/sharedFunctions';
 import TextField from '@material-ui/core/TextField';
 import * as actions from '../../store/actions/index';
 import InfoForm from '../../components/infoForm/infoForm';
@@ -12,39 +13,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 
 class Auth extends Component {
-    state = {
-        authData: {
-            userName: {
-                elementType: 'input',
-                elementConfig: {
-                    label: 'User Name',
-                    type: 'input',
-                    placeholder: 'User Name',
-                },
-                value: '',
-                rules: {
-                    required: true
-                },
-                touched: false,
-                valid: false
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    label: 'Password',
-                    type: 'password',
-                    placeholder: 'Enter Password',
-                },
-                rules: {
-                    required: true,
-                    minLength: 7,
-                },
-                value: '',
-                touched: false,
-                valid: false,
-            }
-        }
-    };
+    state = {...authForm }
+        
     changeHandler = (id, event) => {
         const valid = checkValid(this.state.authData[id].rules, event.target.value)
         const updateEl = updateObject(this.state.authData[id], { value: event.target.value, valid: valid, touched: true })

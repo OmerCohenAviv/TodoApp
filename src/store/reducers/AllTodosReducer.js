@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../sharedFunctions/sharedFunctions';
+import { updateObject } from '../../utility/sharedFunctions/sharedFunctions';
 
 const initialState = {
     allTodos: [],

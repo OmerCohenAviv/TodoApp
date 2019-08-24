@@ -3,78 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import Card from '../../components/UI/Card/Card';
-import { updateObject, checkValid } from '../../sharedFunctions/sharedFunctions';
+import { cardData } from '../../utility/Configs/Configs'
+import { updateObject, checkValid, updateElement} from '../../utility/sharedFunctions/sharedFunctions';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import SendButton from '../../components/UI/Buttons/sendButton/sendButton';
 
-// import Modal from '../../components/UI/Modal/Modal';
-
-
-
 class Home extends Component {
-    state = {
-        cardData: {
-            title: {
-                elementType: 'input',
-                elementConfig: {
-                    label: 'Title',
-                    type: 'text',
-                    placeholder: 'Title'
-                },
-                rules: {
-                    maxLength: 20,
-                    required: true
-                },
-                value: '',
-                valid: false,
-                touched: false,
-            },
-            context: {
-                elementType: 'textarea',
-                elementConfig: {
-                    label: 'Context',
-                    type: 'text',
-                    placeholder: 'context'
-                },
-                rules: {
-                    maxLength: 100,
-                    required: true
-                },
-                value: '',
-                valid: false,
-                touched: false,
-            },
-            importantcy: {
-                elementType: 'select',
-                elementConfig: {
-                    label: 'Important',
-                    options: [
-                        { value: 'high', displayValue: 'High' },
-                        { value: 'medium', displayValue: 'Medium' },
-                        { value: 'low', displayValue: 'Low' }
-                    ]
-
-                },
-                rules: {
-                    required: null
-                },
-                value: 'high',
-                valid: true,
-            },
-        },
-        cardValdiation: false
-    };
-
-
+    state = {...cardData }
+              
     changeValueHandler = (event, elType) => {
         const valid = checkValid(this.state.cardData[elType].rules, event.target.value)
-        const updateElement = updateObject(this.state.cardData[elType], {
-            value: event.target.value,
-            touched: true,
-            valid: valid
-        });
-        const updateCardData = updateObject(this.state.cardData, { [elType]: updateElement } )
+        const updatedElement = updateElement(event, elType, valid, this)
+        const updateCardData = updateObject(this.state.cardData, { [elType]: updatedElement } )
         this.setState({ cardData: updateCardData })
     };
 
@@ -132,8 +73,7 @@ class Home extends Component {
         );
     };
 };
-const mapStateToProps = state => {
-    return {
+const mapStateToProps = state => { return {
         loading: state.homeReducer.loading,
         token: state.authReducer.token,
         id: state.authReducer.id

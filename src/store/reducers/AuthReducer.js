@@ -1,6 +1,4 @@
-
-
-import { updateObject } from '../../sharedFunctions/sharedFunctions';
+import { updateObject } from '../../utility/sharedFunctions/sharedFunctions';
 import * as actionTypes from '../actions/actionTypes';
 
 const initalState = {
@@ -9,7 +7,6 @@ const initalState = {
     token: null,
     id: null
 };
-
 const authReducer = (state = initalState, action) => {
     switch (action.type) {
         case (actionTypes.AUTH_START): {
@@ -18,7 +15,8 @@ const authReducer = (state = initalState, action) => {
         case (actionTypes.AUTH_SUCCESS): {
             return updateObject(state, {
             loading: false, 
-            error: false})
+            error: false
+        })
         }
         case (actionTypes.AUTH_FAIL): {
            return  updateObject(state,{error: action.error, loading: false}) }
