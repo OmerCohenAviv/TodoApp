@@ -90,6 +90,68 @@ export const authForm =  {
     }
 }
 
+export const cardDataAllTodos = {
+    cardData: {
+        title: {
+            elementType: 'input',
+            elementConfig: {
+                label: 'Title',
+                type: 'text',
+                placeholder: 'Title'
+            },
+            rules: {
+                maxLength: 20,
+                required: true
+            },
+            select: false,
+            value: '',
+            valid: true,
+            touched: false,
+        },
+        context: {
+            elementType: 'textarea',
+            elementConfig: {
+                label: 'Context',
+                type: 'textarea',
+                placeholder: 'context'
+            },
+            rules: {
+                maxLength: 100,
+                required: true
+            },
+            select: false,
+            value: '',
+            touched: false,
+            valid: true,
+        },
+        importantcy: {
+            elementType: 'checkbox',
+            elementConfig: {
+                label: 'Important',
+                options: [
+                    { value: 'high', displayValue: 'High' },
+                    { value: 'medium', displayValue: 'Medium' },
+                    { value: 'low', displayValue: 'Low' }
+                ]
+
+            },
+            rules: {
+                required: true
+            },
+            select: true,
+            touched: false,
+            value: 'high',
+            valid: true,
+        },
+    },
+    progressTodo: false,
+    cardValdiation: true,
+    editShow: false,
+    currentEditIndex: '',
+    currentValuesEdit: ''
+};
+
+
 
 
 

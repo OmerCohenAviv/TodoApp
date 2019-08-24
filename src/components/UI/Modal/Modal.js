@@ -46,7 +46,7 @@ export default function SimpleModal() {
     <div>
       <p>Click to get the full Modal experience!</p>
       <button type="button" onClick={handleOpen}>
-        Open Modal
+        Delete
       </button>
       <Modal
         aria-labelledby="simple-modal-title"
@@ -59,7 +59,6 @@ export default function SimpleModal() {
           <p id="simple-modal-description">
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </p>
-          <SimpleModal />
         </div>
       </Modal>
     </div>

@@ -9,17 +9,11 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import TextField from '@material-ui/core/TextField';
 import InfoForm from '../../../components/infoForm/infoForm';
 
-
-
-
 class SignIn extends Component {
     state = {...authForm};
-
-    
+  
     changeHandler = (id, event) => {
-        console.log(this.state)
         const valid = checkValid(this.state.authData[id].rules, event.target.value)
-        console.log(id)
         const updatedEl = updateElementAuth(event, id, valid, this)
         const updateAuthData = updateObject(this.state.authData, { [id]: updatedEl } );
         this.setState({ authData: updateAuthData })
@@ -36,7 +30,6 @@ class SignIn extends Component {
     }
 
     render() {
-
         let authFormArr = []
         for (let ele in this.state.authData) {
             authFormArr.push({
@@ -76,12 +69,9 @@ class SignIn extends Component {
                     clicked={this.authHandler}
                     disabled={disabled}
                     type={'primary'} />
-
-
         );
     };
 };
-
 
 const mapStateToProps = state => {
     return {
@@ -90,7 +80,6 @@ const mapStateToProps = state => {
         token: state.authReducer.token
     }
 }
-
 const mapDispatchToProps = disaptch => {
     return { onSignInInit: (event) => disaptch(actions.signInInit(event)) }
 };

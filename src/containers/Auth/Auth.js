@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { authForm } from '../../utility/Configs/Configs';
-import { updateObject, checkValid } from '../../utility/sharedFunctions/sharedFunctions';
+import { updateObject, checkValid, updateElementAuth} from '../../utility/sharedFunctions/sharedFunctions';
 import TextField from '@material-ui/core/TextField';
 import * as actions from '../../store/actions/index';
 import InfoForm from '../../components/infoForm/infoForm';
@@ -17,7 +17,7 @@ class Auth extends Component {
         
     changeHandler = (id, event) => {
         const valid = checkValid(this.state.authData[id].rules, event.target.value)
-        const updateEl = updateObject(this.state.authData[id], { value: event.target.value, valid: valid, touched: true })
+        const updateEl = updateElementAuth(event , id , valid , this)
         const updateAuthData = updateObject(this.state.authData, {
             [id]: updateEl
         });
