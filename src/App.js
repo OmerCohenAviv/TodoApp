@@ -38,4 +38,4 @@ const mapDispatchToProps = dispatch => {
   return { onAutoSignIn: () => dispatch(actions.signInAuto()) } 
 };
 
-export default connect(null,mapDispatchToProps)(App)
+export default connect(null,mapDispatchToProps)(App);
