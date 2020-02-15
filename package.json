@@ -19,7 +19,7 @@
     "redux-thunk": "^2.3.0",
     "thunk": "^0.0.1",
     "typeface-roboto": "^0.0.75",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   },
   "scripts": {
     "start": "react-scripts start",
